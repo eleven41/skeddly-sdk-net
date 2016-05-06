@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EB43E4AF-45A2-42B0-B4B5-E94B25E0BCFA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Skeddly</RootNamespace>
+    <AssemblyName>SkeddlySDK</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccessKeyCredentials.cs" />
+    <Compile Include="Constants\ActionExecutionLogMoreTypes.cs" />
+    <Compile Include="Constants\ActionExecutionStatuses.cs" />
+    <Compile Include="Constants\CreditCardStatuses.cs" />
+    <Compile Include="Constants\UserStatuses.cs" />
+    <Compile Include="Constants\WeeklyScheduleDaysOfWeek.cs" />
+    <Compile Include="Constants\ElasticBeanstalkApplicationIdentificationMethods.cs" />
+    <Compile Include="Constants\ElasticBeanstalkApplicationVersionIdentificationMethods.cs" />
+    <Compile Include="Constants\EmailStatuses.cs" />
+    <Compile Include="Constants\AccountStatuses.cs" />
+    <Compile Include="Constants\AmiImageIdentificationMethods.cs" />
+    <Compile Include="Constants\BackupMySQLServerTargets.cs" />
+    <Compile Include="Constants\CloudProviders.cs" />
+    <Compile Include="Constants\CloudProviderSubTypes.cs" />
+    <Compile Include="Constants\CompareTypes.cs" />
+    <Compile Include="Constants\ConflictResolutionMethods.cs" />
+    <Compile Include="Constants\CopyEc2InstanceMethods.cs" />
+    <Compile Include="Constants\CredentialStatuses.cs" />
+    <Compile Include="Constants\CredentialTypes.cs" />
+    <Compile Include="Constants\DeregisterInstanceFromLoadBalancerMethods.cs" />
+    <Compile Include="Constants\OverwriteS3ObjectRules.cs" />
+    <Compile Include="Constants\RdsSnapshotIdentificationMethods.cs" />
+    <Compile Include="Constants\EbsSnapshotIdentificationMethods.cs" />
+    <Compile Include="Constants\EbsVolumeIdentificationMethods.cs" />
+    <Compile Include="Constants\MonthlyScheduleDays.cs" />
+    <Compile Include="Constants\DailyScheduleDays.cs" />
+    <Compile Include="Constants\Ec2InstanceIdentificationMethods.cs" />
+    <Compile Include="Constants\MonthlyScheduleDaysOfMonth.cs" />
+    <Compile Include="Constants\MonthlyScheduleMonths.cs" />
+    <Compile Include="Constants\MonthlyScheduleWeeks.cs" />
+    <Compile Include="Constants\PaymentMethods.cs" />
+    <Compile Include="Constants\RdsSnapshotTypes.cs" />
+    <Compile Include="Constants\Route53HostedZoneIdentificationMethods.cs" />
+    <Compile Include="Constants\S3ObjectRenameMethods.cs" />
+    <Compile Include="Constants\ScheduleTypes.cs" />
+    <Compile Include="Constants\TagsRequiredOptions.cs" />
+    <Compile Include="Constants\TriggerTypes.cs" />
+    <Compile Include="JsonConverters\ManagedInstanceScheduleConverter.cs" />
+    <Compile Include="JsonConverters\ActionScheduleConverter.cs" />
+    <Compile Include="JsonConverters\ActionConverter.cs" />
+    <Compile Include="Model\AccountSettings.cs" />
+    <Compile Include="Model\ActionExecution.cs" />
+    <Compile Include="Model\ActionExecutionDateComparesToOptions.cs" />
+    <Compile Include="Model\ActionExecutionResult.cs" />
+    <Compile Include="Model\DetachManagedPolicyResponse.cs" />
+    <Compile Include="Model\DetachManagedPolicyRequest.cs" />
+    <Compile Include="Model\AttachManagedPolicyRequest.cs" />
+    <Compile Include="Model\AttachManagedPolicyResponse.cs" />
+    <Compile Include="Model\CreateManagedInstanceGroupResponse.cs" />
+    <Compile Include="Model\CreateManagedInstanceGroupRequest.cs" />
+    <Compile Include="Model\CreateUserRequest.cs" />
+    <Compile Include="Model\CreateUserResponse.cs" />
+    <Compile Include="Model\ListManagedPoliciesRequest.cs" />
+    <Compile Include="Model\ListManagedPoliciesResponse.cs" />
+    <Compile Include="Model\RemoveUserMfaRequest.cs" />
+    <Compile Include="Model\GetAccountSettingsResponse.cs" />
+    <Compile Include="Model\GetAccountSettingsRequest.cs" />
+    <Compile Include="Model\GetManagedInstanceGroupRequest.cs" />
+    <Compile Include="Model\GetManagedInstanceGroupResponse.cs" />
+    <Compile Include="Model\GetTimeZoneResponse.cs" />
+    <Compile Include="Model\GetTimeZoneRequest.cs" />
+    <Compile Include="Model\GetUserRequest.cs" />
+    <Compile Include="Model\RemoveUserMfaResponse.cs" />
+    <Compile Include="Model\ModifyUserResponse.cs" />
+    <Compile Include="Model\GetUserResponse.cs" />
+    <Compile Include="Model\ListTimeZonesResponse.cs" />
+    <Compile Include="Model\ListTimeZonesRequest.cs" />
+    <Compile Include="Model\ListUsersRequest.cs" />
+    <Compile Include="Model\ListUsersResponse.cs" />
+    <Compile Include="Model\ManagedPolicy.cs" />
+    <Compile Include="Model\ModifyUserRequest.cs" />
+    <Compile Include="Model\TimeZoneNotFoundException.cs" />
+    <Compile Include="Model\ManagedInstanceSchedule.cs" />
+    <Compile Include="Model\ManagedInstanceGroupIncludes.cs" />
+    <Compile Include="Model\ManagedInstanceGroupNotFoundException.cs" />
+    <Compile Include="Model\ActionParameters.Amazon.cs" />
+    <Compile Include="Model\ActionParameters.cs" />
+    <Compile Include="Model\AmazonIamRoleExternalId.cs" />
+    <Compile Include="Model\CreateRssFeedRequest.cs" />
+    <Compile Include="Model\DateRange.cs" />
+    <Compile Include="Model\DeleteManagedInstanceGroupRequest.cs" />
+    <Compile Include="Model\GetAccountAliasRequest.cs" />
+    <Compile Include="Model\GetAccountAliasResponse.cs" />
+    <Compile Include="Model\GetActionExecutionLogRequest.cs" />
+    <Compile Include="Model\CancelActionExecutionRequest.cs" />
+    <Compile Include="Model\GetActionExecutionRequest.cs" />
+    <Compile Include="Model\GetActionExecutionLogResponse.cs" />
+    <Compile Include="Model\CancelActionExecutionResponse.cs" />
+    <Compile Include="Model\GetActionExecutionResponse.cs" />
+    <Compile Include="Model\GetDashboardInformationRequest.cs" />
+    <Compile Include="Model\GetDashboardInformationResponse.cs" />
+    <Compile Include="Model\CreditTransaction.cs" />
+    <Compile Include="Model\ExecuteActionRequest.cs" />
+    <Compile Include="Model\GenerateAmazonIamRoleExternalIdRequest.cs" />
+    <Compile Include="Model\GenerateAmazonIamRoleExternalIdResponse.cs" />
+    <Compile Include="Model\GetAccountInformationResponse.cs" />
+    <Compile Include="Model\GetAccountInformationRequest.cs" />
+    <Compile Include="Model\GetRegionResponse.cs" />
+    <Compile Include="Model\GetRegionRequest.cs" />
+    <Compile Include="Model\GetActionRequest.cs" />
+    <Compile Include="Model\GetActionResponse.cs" />
+    <Compile Include="Model\CreateRssFeedResponse.cs" />
+    <Compile Include="Model\GetRssFeedInformationResponse.cs" />
+    <Compile Include="Model\ListActionExecutionsFilter.cs" />
+    <Compile Include="Model\ListManagedInstanceGroupsRequest.cs" />
+    <Compile Include="Model\ListManagedInstanceGroupsResponse.cs" />
+    <Compile Include="Model\ListUpcomingActionExecutionsRequest.cs" />
+    <Compile Include="Model\ListUpcomingActionExecutionsResponse.cs" />
+    <Compile Include="Model\ListActionExecutionsRequest.cs" />
+    <Compile Include="Model\ListActionExecutionsResponse.cs" />
+    <Compile Include="Model\ListRegionsResponse.cs" />
+    <Compile Include="Model\ListCredentialsRequest.cs" />
+    <Compile Include="Model\ListInvoicesRequest.cs" />
+    <Compile Include="Model\InvoiceIncludes.cs" />
+    <Compile Include="Model\ActionNotFoundException.cs" />
+    <Compile Include="Model\ActionRegion.cs" />
+    <Compile Include="Model\ActionTag.cs" />
+    <Compile Include="Model\ActionType.cs" />
+    <Compile Include="Model\BillingAddress.cs" />
+    <Compile Include="Model\CreditBalance.cs" />
+    <Compile Include="Model\CreditCard.cs" />
+    <Compile Include="Model\DeleteActionRequest.cs" />
+    <Compile Include="Model\GetActionTagsFilter.cs" />
+    <Compile Include="Model\GetActionRegionsRequest.cs" />
+    <Compile Include="Model\GetActionRegionsResponse.cs" />
+    <Compile Include="Model\GetActionTagsRequest.cs" />
+    <Compile Include="Model\GetActionTagsResponse.cs" />
+    <Compile Include="Model\GetActionRegionsFilter.cs" />
+    <Compile Include="Model\GetActionTypesRequest.cs" />
+    <Compile Include="Model\GetActionTypesResponse.cs" />
+    <Compile Include="Model\ActionDisplayData.cs" />
+    <Compile Include="Model\ActionExecutionNotFoundException.cs" />
+    <Compile Include="Model\ActionClasses.cs" />
+    <Compile Include="Model\ActionIncludes.cs" />
+    <Compile Include="Model\GetActionTypesFilter.cs" />
+    <Compile Include="Model\GetInvoiceRequest.cs" />
+    <Compile Include="Model\GetInvoiceResponse.cs" />
+    <Compile Include="Model\ListCreditTransactionsResponse.cs" />
+    <Compile Include="Model\ListRegionsRequest.cs" />
+    <Compile Include="Model\ManagedInstanceGroup.cs" />
+    <Compile Include="Model\Region.cs" />
+    <Compile Include="Model\RegionIncludes.cs" />
+    <Compile Include="Model\RssFeed.cs" />
+    <Compile Include="Model\ScheduleParameters.cs" />
+    <Compile Include="Model\SetAccountAliasRequest.cs" />
+    <Compile Include="Model\SetAccountAliasResponse.cs" />
+    <Compile Include="Model\TimeZone.cs" />
+    <Compile Include="Model\UnpaidInvoice.cs" />
+    <Compile Include="Model\UpcomingActionExecution.cs" />
+    <Compile Include="Model\ListUpcomingActionExecutionsFilter.cs" />
+    <Compile Include="Model\UpdateBillingAddressResponse.cs" />
+    <Compile Include="Model\UpdateBillingAddressRequest.cs" />
+    <Compile Include="Model\GetBillingAddressResponse.cs" />
+    <Compile Include="Model\GetPaymentInformationResponse.cs" />
+    <Compile Include="Model\Invoice.cs" />
+    <Compile Include="Model\ListInvoicesResponse.cs" />
+    <Compile Include="Model\UnauthorizedOperationException.cs" />
+    <Compile Include="Model\ListManagedInstancesFilter.cs" />
+    <Compile Include="Model\ListManagedInstancesRequest.cs" />
+    <Compile Include="Model\ListManagedInstancesResponse.cs" />
+    <Compile Include="Model\Action.cs" />
+    <Compile Include="Model\ActionSchedule.cs" />
+    <Compile Include="Model\ListActionsFilter.cs" />
+    <Compile Include="Model\ListActionsRequest.cs" />
+    <Compile Include="Model\ListActionsResponse.cs" />
+    <Compile Include="Model\GenerateIamPolicyRequest.cs" />
+    <Compile Include="Model\GenerateIamPolicyResponse.cs" />
+    <Compile Include="Model\DeleteCredentialRequest.cs" />
+    <Compile Include="Model\CreateCredentialRequest.cs" />
+    <Compile Include="Model\CreateCredentialResponse.cs" />
+    <Compile Include="ISkeddlyClient.cs" />
+    <Compile Include="ISkeddlyCredentials.cs" />
+    <Compile Include="Model\Credential.cs" />
+    <Compile Include="Model\CredentialNotFoundException.cs" />
+    <Compile Include="Model\GetCredentialRequest.cs" />
+    <Compile Include="Model\GetCredentialResponse.cs" />
+    <Compile Include="Model\InvalidRoleOrAccessDeniedException.cs" />
+    <Compile Include="Model\ListCredentialsResponse.cs" />
+    <Compile Include="Model\ManagedInstance.cs" />
+    <Compile Include="Model\PaymentInformation.cs" />
+    <Compile Include="Model\SkeddlyException.cs" />
+    <Compile Include="Model\SkeddlyWebException.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserIncludes.cs" />
+    <Compile Include="SkeddlyClient.ActionExecutions.cs" />
+    <Compile Include="SkeddlyClient.Account.cs" />
+    <Compile Include="SkeddlyClient.ManagedInstanceGroups.cs" />
+    <Compile Include="SkeddlyClient.ManagedPolicies.cs" />
+    <Compile Include="SkeddlyClient.Users.cs" />
+    <Compile Include="SkeddlyClient.TimeZones.cs" />
+    <Compile Include="SkeddlyClient.Regions.cs" />
+    <Compile Include="SkeddlyClient.Actions.cs" />
+    <Compile Include="SkeddlyClient.ManagedInstances.cs" />
+    <Compile Include="SkeddlyClient.Credentials.cs" />
+    <Compile Include="SkeddlyClient.Exceptions.cs" />
+    <Compile Include="SkeddlyClient.Billing.cs" />
+    <Compile Include="SkeddlyClient.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\UpdateCredentialRequest.cs" />
+    <Compile Include="Model\UpdateCredentialResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

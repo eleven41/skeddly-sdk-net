@@ -11,5 +11,7 @@ namespace Skeddly.Model
 
 		public CreditCard Card { get; set; }
 		public CreditBalance CreditBalance { get; set; }
+		public PaymentPartner PaymentPartner { get; set; }
+		public AwsMarketplaceSubscription AwsMarketplaceSubscription { get; set; }
 	}
 }

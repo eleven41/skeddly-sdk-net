@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace Skeddly.Model
 {
+	public class AmazonActionParameters : ActionParameters
+	{
+		public IEnumerable<string> CredentialIds { get; set; }
+		public IEnumerable<string> RegionNames { get; set; }
+	}
+
 	public class Tag
 	{
-		public string Name { get; set; }
+		public string Key { get; set; }
 		public string Value { get; set; }
 	}
 
-	public class AmazonAddSecurityGroupRuleParameters : ActionParameters
+	public class AmazonAddSecurityGroupRuleParameters : AmazonActionParameters
 	{
 		public string Direction { get; set; }
 		public string Protocol { get; set; }
@@ -20,21 +26,23 @@ namespace Skeddly.Model
 		public int ToPort { get; set; }
 
 		public string SecurityGroup { get; set; }
+		public string SourceType { get; set; }
 		public string Source { get; set; }
+		public string RegisterMultipleDnsEntries { get; set; }
 
 		public int? RevokeTimeInSeconds { get; set; }
 	}
 
-	public class AmazonAssociateElasticIpParameters : ActionParameters
+	public class AmazonAssociateElasticIpParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
 		public string InstanceName { get; set; }
 
-		public string PublicIp { get; set; }
+		public string ElasticIpAddress { get; set; }
 	}
 
-	public class AmazonBackupRoute53HostedZoneParameters : ActionParameters
+	public class AmazonBackupRoute53HostedZoneParameters : AmazonActionParameters
 	{
 		public string HostedZoneName { get; set; }
 		public string BucketName { get; set; }
@@ -42,7 +50,7 @@ namespace Skeddly.Model
 		public string ExportFormat { get; set; }
 	}
 
-	public class AmazonBackupEc2InstanceParameters : ActionParameters
+	public class AmazonBackupEc2InstanceParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
@@ -54,16 +62,24 @@ namespace Skeddly.Model
 		public string ConsistencyMethod { get; set; }
 		public string DeregisterFromLoadBalancers { get; set; }
 
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
 	}
 
-	public class AmazonBackupEc2InstancesParameters : ActionParameters
+	public class RollingInstanceStops
+	{
+		public string Method { get; set; }
+		public string ResourceTagName { get; set; }
+		public int DelaySeconds { get; set; }
+		public bool IsWaitForStatus { get; set; }
+	}
+
+	public class AmazonBackupEc2InstancesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 
-		public List<string> InstanceIds { get; set; }
+		public IEnumerable<string> InstanceIds { get; set; }
 
 		public InstanceNameComparison InstanceNameComparison { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
@@ -71,31 +87,50 @@ namespace Skeddly.Model
 		public string ConsistencyMethod { get; set; }
 		public string DeregisterFromLoadBalancers { get; set; }
 
-		public string RollingInstanceStopsMethod { get; set; }
-		public string RollingInstanceStopsResourceTagName { get; set; }
-		public double RollingInstanceStopsDelaySeconds { get; set; }
-		public bool RollingInstanceStopsIsWaitForStatus { get; set; }
+		public RollingInstanceStops RollingInstanceStops { get; set; }
 
 		public string SnapshotName { get; set; }
 		public string Description { get; set; }
 
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
 	}
 
-	public class AmazonBackupRoute53HostedZonesParameters : ActionParameters
+	public class AmazonBackupRoute53HostedZonesParameters : AmazonActionParameters
 	{
 		public string HostedZoneIdentificationMethod { get; set; }
 
-		public List<string> HostedZoneNames { get; set; }
+		public IEnumerable<string> HostedZoneNames { get; set; }
 
 		public string BucketName { get; set; }
 		public string ObjectKey { get; set; }
 		public string ExportFormat { get; set; }
 	}
 
-	public class AmazonBackupMySQLServerParameters : ActionParameters
+	public class AmazonS3Target
+	{
+		public string BucketName { get; set; }
+		public string ObjectKey { get; set; }
+		public string EncryptionType { get; set; }
+	}
+
+	public class SpecificDatabases
+	{
+		public IEnumerable<string> Databases { get; set; }
+	}
+
+	public class AllDatabases
+	{
+		public bool IsSeparateDatabases { get; set; }
+	}
+
+	public class SpotInstanceOptions
+	{
+		public decimal MaxSpotPrice { get; set; }
+	}
+
+	public class AmazonBackupMySQLServerParameters : AmazonActionParameters
 	{
 		public string EngineVersion { get; set; }
 
@@ -106,27 +141,26 @@ namespace Skeddly.Model
 		public string PrivateIpAddress { get; set; }
 		public int? VolumeSize { get; set; }
 
-		public bool IsUseSpot { get; set; }
-		public double? MaxSpotPrice { get; set; }
+		public SpotInstanceOptions SpotInstanceOptions { get; set; }
 
 		public string Endpoint { get; set; }
 		public int Port { get; set; }
 		public string Username { get; set; }
 		public string Password { get; set; }
 
-		public IEnumerable<string> Databases { get; set; }
-		public bool IsSeparateDatabases { get; set; }
-		public bool IsOmitDatabasesFlag { get; set; }
+		public string Databases { get; set; }
+		public SpecificDatabases SpecificDatabases { get; set; }
+		public AllDatabases AllDatabases { get; set; }
 
 		public string ExtraCommandLineArguments { get; set; }
+		public bool IsOmitDatabasesFlag { get; set; }
 
 		public string TargetType { get; set; }
-		public string BucketName { get; set; }
-		public string ObjectKey { get; set; }
-		public string EncryptionType { get; set; }
+
+		public AmazonS3Target AmazonS3Target { get; set; }
 	}
 
-	public class AmazonChangeEc2InstanceTypeParameters : ActionParameters
+	public class AmazonChangeEc2InstanceTypeParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
@@ -141,7 +175,7 @@ namespace Skeddly.Model
 
 	}
 
-	public class AmazonChangeRdsInstanceClassParameters : ActionParameters
+	public class AmazonChangeRdsInstanceClassParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string DbInstanceId { get; set; }
@@ -157,7 +191,7 @@ namespace Skeddly.Model
 		public string CompareType { get; set; }
 	}
 
-	public class AmazonCopyAmiImagesParameters : ActionParameters
+	public class AmazonCopyAmiImagesParameters : AmazonActionParameters
 	{
 		public string ImageIdentificationMethod { get; set; }
 		public IEnumerable<string> ImageIds { get; set; }
@@ -177,17 +211,17 @@ namespace Skeddly.Model
 
 		public bool IsCopyTags { get; set; }
 
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 
 		public bool IsCopyImagePermissions { get; set; }
 		public bool IsCopySnapshotPermissions { get; set; }
 	}
 
-	public class AmazonCopyAmiToRegionParameters : ActionParameters
+	public class AmazonCopyAmiToRegionParameters : AmazonActionParameters
 	{
 	}
 
-	public class AmazonCopyEbsSnapshotsParameters : ActionParameters
+	public class AmazonCopyEbsSnapshotsParameters : AmazonActionParameters
 	{
 		public string SnapshotIdentificationMethod { get; set; }
 
@@ -201,16 +235,16 @@ namespace Skeddly.Model
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
 
-		public int? NewerThanDays { get; set; }
+		public int? NewerThanInDays { get; set; }
 
 		public bool IsCopyTags { get; set; }
 
 		public bool IsPreventDuplicates { get; set; }
 
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 	}
 
-	public class AmazonCopyEbsVolumeParameters : ActionParameters
+	public class AmazonCopyEbsVolumeParameters : AmazonActionParameters
 	{
 		public string VolumeIdentificationMethod { get; set; }
 		public string VolumeId { get; set; }
@@ -228,7 +262,7 @@ namespace Skeddly.Model
 		public bool IsStopInstance { get; set; }
 	}
 
-	public class AmazonCopyEc2InstanceParameters : ActionParameters
+	public class AmazonCopyEc2InstanceParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
@@ -243,6 +277,7 @@ namespace Skeddly.Model
 		public string SecurityGroupOverride { get; set; }
 		public string SubnetIdOverride { get; set; }
 		public string InstanceTypeOverride { get; set; }
+		public string IamInstanceProfileOverride { get; set; }
 
 		public string TargetCredentialId { get; set; }
 
@@ -268,7 +303,7 @@ namespace Skeddly.Model
 		public string SnapshotId { get; set; }
 	}
 
-	public class AmazonCopyRdsSnapshotsParameters : ActionParameters
+	public class AmazonCopyRdsSnapshotsParameters : AmazonActionParameters
 	{
 		public string SnapshotIdentificationMethod { get; set; }
 		public RdsSnapshotIdComparison SnapshotIdComparison { get; set; }
@@ -283,13 +318,14 @@ namespace Skeddly.Model
 		public bool IsCopyTags { get; set; }
 		public int? NewerThanInDays { get; set; }
 		public string ConflictResolutionMethod { get; set; }
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
+		public string KmsKeyOverride { get; set; }
 
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
 	}
 
-	public class AmazonCopyS3ObjectsParameters : ActionParameters
+	public class AmazonCopyS3ObjectsParameters : AmazonActionParameters
 	{
 		public string SourceBucketName { get; set; }
 		public string SourcePrefix { get; set; }
@@ -298,11 +334,12 @@ namespace Skeddly.Model
 		public string RenameMethod { get; set; }
 		public string TargetPrefix { get; set; }
 		public string StorageClass { get; set; }
+		public string AclSettings { get; set; }
 
 		public string OverwriteRule { get; set; }
 	}
 
-	public class CreateAmiImagesParameters : ActionParameters
+	public class CreateAmiImagesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 
@@ -323,8 +360,11 @@ namespace Skeddly.Model
 
 		public IEnumerable<AmiImageTag> Tags { get; set; }
 
+		public InstanceVolumeChanges InstanceVolumeChanges { get; set; }
+
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
+		public string TargetKmsKeyIdOverride { get; set; }
 	}
 
 	public class AmiImageTag
@@ -336,19 +376,19 @@ namespace Skeddly.Model
 		public bool AddToSnapshots { get; set; }
 	}
 
-	public class CreateDirectoryServiceSnapshotsParameters : ActionParameters
+	public class CreateDirectoryServiceSnapshotsParameters : AmazonActionParameters
 	{
 		public string DirectoryIdentificationMethod { get; set; }
-		public List<string> DirectoryId { get; set; }
-		public List<string> DirectoryNames { get; set; }
+		public IEnumerable<string> DirectoryIds { get; set; }
+		public IEnumerable<string> DirectoryNames { get; set; }
 
 		public string SnapshotName { get; set; }
 	}
 
-	public class CreateEbsSnapshotsParameters : ActionParameters
+	public class CreateEbsSnapshotsParameters : AmazonActionParameters
 	{
 		public string VolumeIdentificationMethod { get; set; }
-		public List<string> VolumeIds { get; set; }
+		public IEnumerable<string> VolumeIds { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
 
 		public string Description { get; set; }
@@ -357,13 +397,13 @@ namespace Skeddly.Model
 		public string ConsistencyMethod { get; set; }
 		public string DeregisterFromLoadBalancers { get; set; }
 
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
 	}
 
-	public class CreateElastiCacheClusterParameters : ActionParameters
+	public class CreateElastiCacheClusterParameters : AmazonActionParameters
 	{
 		public string ClusterId { get; set; }
 		public string Engine { get; set; }
@@ -383,7 +423,7 @@ namespace Skeddly.Model
 		public int? DeleteTimeInSeconds { get; set; }
 	}
 
-	public class CreateElastiCacheReadReplicaParameters : ActionParameters
+	public class CreateElastiCacheReadReplicaParameters : AmazonActionParameters
 	{
 		public string ClusterId { get; set; }
 		public string ReplicationGroupId { get; set; }
@@ -399,7 +439,7 @@ namespace Skeddly.Model
 	}
 
 
-	public class CreateElastiCacheSnapshotsParameters : ActionParameters
+	public class CreateElastiCacheSnapshotsParameters : AmazonActionParameters
 	{
 		public string ClusterIdentificationMethod { get; set; }
 		public ElastiCacheClusterIdComparison ClusterIdComparison { get; set; }
@@ -407,7 +447,15 @@ namespace Skeddly.Model
 		public string SnapshotId { get; set; }
 	}
 
-	public class CreateImageParameters : ActionParameters
+	public class InstanceVolumeChanges
+	{
+		public string VolumesToInclude { get; set; }
+		public string ChangeVolumeType { get; set; }
+		public int? ChangeIops { get; set; }
+		public bool? ChangeIsDeleteOnTerminate { get; set; }
+	}
+
+	public class CreateImageParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
@@ -424,32 +472,33 @@ namespace Skeddly.Model
 
 		public IEnumerable<AmiImageTag> Tags { get; set; }
 
+		public InstanceVolumeChanges InstanceVolumeChanges { get; set; }
+
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
 	}
 
-	public class CreateRdsReadReplicaParameters : ActionParameters
+	public class CreateRdsReadReplicaParameters : AmazonActionParameters
 	{
 		public string DbInstanceId { get; set; }
 		public string ReplicaId { get; set; }
 		public string AvailabilityZone { get; set; }
 
 		public int? DeleteTimeInSeconds { get; set; }
-		public string FinalSnapshotId { get; set; }
 	}
 
-	public class CreateRdsSnapshotParameters : ActionParameters
+	public class CreateRdsSnapshotParameters : AmazonActionParameters
 	{
 		public string DbInstanceId { get; set; }
 		public string SnapshotId { get; set; }
 
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
 	}
 
-	public class CreateRdsSnapshotsParameters : ActionParameters
+	public class CreateRdsSnapshotsParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public RdsInstanceIdComparison InstanceIdComparison { get; set; }
@@ -457,22 +506,24 @@ namespace Skeddly.Model
 
 		public string SnapshotId { get; set; }
 
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
+		public string TargetKmsKeyOverride { get; set; }
 	}
 
-	public class CreateRedshiftSnapshotParameters : ActionParameters
+	public class CreateRedshiftSnapshotParameters : AmazonActionParameters
 	{
 		public string ClusterId { get; set; }
 		public string SnapshotId { get; set; }
 
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 	}
 
-	public class CreateEbsSnapshotParameters : ActionParameters
+	public class CreateEbsSnapshotParameters : AmazonActionParameters
 	{
+		public string VolumeIdentificationMethod { get; set; }
 		public string VolumeId { get; set; }
 
 		public string Description { get; set; }
@@ -481,7 +532,7 @@ namespace Skeddly.Model
 		public string ConsistencyMethod { get; set; }
 		public string DeregisterFromLoadBalancers { get; set; }
 
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
@@ -495,7 +546,7 @@ namespace Skeddly.Model
 		public string Value { get; set; }
 	}
 
-	public class DeleteDirectoryServiceSnapshotsParameters : ActionParameters
+	public class DeleteDirectoryServiceSnapshotsParameters : AmazonActionParameters
 	{
 		public int? OlderThanDays { get; set; }
 		public int? MinimumToKeep { get; set; }
@@ -507,7 +558,7 @@ namespace Skeddly.Model
 		public bool IsTest { get; set; }
 	}
 
-	public class DeleteDynamoDbItemsParameters : ActionParameters
+	public class DeleteDynamoDbItemsParameters : AmazonActionParameters
 	{
 		public string TableName { get; set; }
 		public string DateAttribute { get; set; }
@@ -518,7 +569,7 @@ namespace Skeddly.Model
 		public bool IsTest { get; set; }
 	}
 
-	public class DeleteElastiCacheClustersParameters : ActionParameters
+	public class DeleteElastiCacheClustersParameters : AmazonActionParameters
 	{
 		public string ClusterIdentificationMethod { get; set; }
 		public ElastiCacheClusterIdComparison ClusterIdComparison { get; set; }
@@ -533,7 +584,7 @@ namespace Skeddly.Model
 		public string Value { get; set; }
 	}
 
-	public class DeleteElastiCacheSnapshotsParameters : ActionParameters
+	public class DeleteElastiCacheSnapshotsParameters : AmazonActionParameters
 	{
 		public DeleteElastiCacheSnapshotsComparison DeleteComparison { get; set; }
 		public int? OlderThanDays { get; set; }
@@ -548,29 +599,38 @@ namespace Skeddly.Model
 		public string DbInstanceId { get; set; }
 	}
 
-	public class DeleteRdsInstancesParameters : ActionParameters
+	public class DeleteRdsInstancesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public RdsInstanceIdComparison InstanceIdComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
 
 		public string FinalSnapshotId { get; set; }
 
 		public bool IsTest { get; set; }
 	}
 
-	public class DeleteRdsSnapshotsComparison
+	public class RdsSourceIdComparison
 	{
-		public string Field { get; set; }
 		public string CompareType { get; set; }
-		public string Value { get; set; }
-		public string ResourceTagName { get; set; }
+		public string SourceId { get; set; }
 	}
 
-	public class DeleteRdsSnapshotsParameters : ActionParameters
+	public class DeleteRdsSnapshotsParameters : AmazonActionParameters
 	{
-		public DeleteRdsSnapshotsComparison DeleteComparison { get; set; }
-		public int? OlderThanDays { get; set; }
-		public int? MinimumToKeep { get; set; }
+		public string SnapshotIdentificationMethod { get; set; }
+
+		public RdsSnapshotIdComparison SnapshotIdComparison { get; set; }
+		public RdsSourceIdComparison SourceIdComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string DeleteScheme { get; set; }
+
+		public FirstInFirstOutDeleteSchemeParameters FirstInFirstOutParameters { get; set; }
+		public GrandfatherFatherSonDeleteSchemeParameters GrandfatherFatherSonParameters { get; set; }
+
+		public string GroupingMethod { get; set; }
+		public string GroupingResourceTagName { get; set; }
 
 		public bool IsIncludeClusterSnapshots { get; set; }
 
@@ -583,7 +643,7 @@ namespace Skeddly.Model
 		public string ClusterId { get; set; }
 	}
 
-	public class DeleteRedshiftClustersParameters : ActionParameters
+	public class DeleteRedshiftClustersParameters : AmazonActionParameters
 	{
 		public string ClusterIdentificationMethod { get; set; }
 		public RedshiftClusterIdComparison ClusterIdComparison { get; set; }
@@ -600,7 +660,7 @@ namespace Skeddly.Model
 		public string Value { get; set; }
 	}
 
-	public class DeleteRedshiftSnapshotsParameters : ActionParameters
+	public class DeleteRedshiftSnapshotsParameters : AmazonActionParameters
 	{
 		public int? OlderThanDays { get; set; }
 		public int? MinimumToKeep { get; set; }
@@ -618,7 +678,7 @@ namespace Skeddly.Model
 		public string Value { get; set; }
 	}
 
-	public class DeleteS3ObjectsParameters : ActionParameters
+	public class DeleteS3ObjectsParameters : AmazonActionParameters
 	{
 		public string BucketName { get; set; }
 		public string Prefix { get; set; }
@@ -629,48 +689,109 @@ namespace Skeddly.Model
 		public bool IsTest { get; set; }
 	}
 
-	public class DeleteSnapshotsComparison
-	{
-		public string Field { get; set; }
-		public string ResourceTagName { get; set; }
-		public string CompareType { get; set; }
-		public string Value { get; set; }
-	}
-
-	public class DeleteSnapshotsParameters : ActionParameters
+	public class FirstInFirstOutDeleteSchemeParameters
 	{
 		public int? OlderThanDays { get; set; }
 		public int? MinimumToKeep { get; set; }
+	}
 
-		public bool IsPerVolume { get; set; }
+	public class SnapshotNameComparison
+	{
+		public string CompareType { get; set; }
+		public string SnapshotName { get; set; }
+	}
 
-		public DeleteSnapshotsComparison DeleteComparison { get; set; }
+	public class SnapshotDescriptionComparison
+	{
+		public string CompareType { get; set; }
+		public string Description { get; set; }
+	}
+
+	public class VolumeIdComparison
+	{
+		public string CompareType { get; set; }
+		public string VolumeId { get; set; }
+	}
+
+	public class MinimumToKeepPeriodParameters
+	{
+		public int MinimumToKeep { get; set; }
+		public int? NumPeriods { get; set; }
+	}
+
+	public class GrandfatherFatherSonDeleteSchemeParameters
+	{
+		public MinimumToKeepPeriodParameters Days { get; set; }
+		public MinimumToKeepPeriodParameters Weeks { get; set; }
+		public MinimumToKeepPeriodParameters Months { get; set; }
+		public MinimumToKeepPeriodParameters Years { get; set; }
+	}
+
+	public class DeleteSnapshotsParameters : AmazonActionParameters
+	{
+		public string SnapshotIdentificationMethod { get; set; }
+
+		public SnapshotDescriptionComparison SnapshotDescriptionComparison { get; set; }
+		public SnapshotNameComparison SnapshotNameComparison { get; set; }
+		public VolumeIdComparison VolumeIdComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string DeleteScheme { get; set; }
+
+		public FirstInFirstOutDeleteSchemeParameters FirstInFirstOutParameters { get; set; }
+		public GrandfatherFatherSonDeleteSchemeParameters GrandfatherFatherSonParameters { get; set; }
+
+		public string GroupingMethod { get; set; }
+		public string GroupingResourceTagName { get; set; }
+
+		public string TargetType { get; set; }
+		public IEnumerable<string> TargetEmails { get; set; }
+		public string ReportFormat { get; set; }
 
 		public bool IsTest { get; set; }
 	}
 
-	public class DeregisterImagesComparison
+	public class NameTagComparison
 	{
-		public string Field { get; set; }
-		public string ResourceTagName { get; set; }
 		public string CompareType { get; set; }
-		public string Value { get; set; }
+		public string NameTag { get; set; }
 	}
 
-	public class DeregisterImagesParameters : ActionParameters
+	public class ImageDescriptionComparison
 	{
-		public int? OlderThanDays { get; set; }
-		public int? MinimumToKeep { get; set; }
+		public string CompareType { get; set; }
+		public string Description { get; set; }
+	}
 
-		public DeregisterImagesComparison DeleteComparison { get; set; }
+	public class DeregisterImagesParameters : AmazonActionParameters
+	{
+		public string ImageIdentificationMethod { get; set; }
+
+		public ImageDescriptionComparison ImageDescriptionComparison { get; set; }
+		public AmiImageNameComparison ImageNameComparison { get; set; }
+		public NameTagComparison NameTagComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string DeregisterSharedImages { get; set; }
+		public string DeleteScheme { get; set; }
+
+		public FirstInFirstOutDeleteSchemeParameters FirstInFirstOutParameters { get; set; }
+		public GrandfatherFatherSonDeleteSchemeParameters GrandfatherFatherSonParameters { get; set; }
+		
+		public string GroupingMethod { get; set; }
+		public string GroupingResourceTagName { get; set; }
 
 		public bool IsDeleteSnapshots { get; set; }
 		public bool IsDeleteFromS3 { get; set; }
 
+		public string TargetType { get; set; }
+		public IEnumerable<string> TargetEmails { get; set; }
+		public string ReportFormat { get; set; }
+
 		public bool IsTest { get; set; }
 	}
 
-	public class DeregisterInstanceFromLoadBalancerParameters : ActionParameters
+	public class DeregisterInstanceFromLoadBalancerParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
@@ -679,10 +800,10 @@ namespace Skeddly.Model
 		public string LoadBalancerName { get; set; }
 	}
 
-	public class ExportEc2InstancesParameters : ActionParameters
+	public class ExportEc2InstancesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
-		public List<string> InstanceIds { get; set; }
+		public IEnumerable<string> InstanceIds { get; set; }
 		public InstanceNameComparison InstanceNameComparison { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
 
@@ -696,11 +817,11 @@ namespace Skeddly.Model
 		public string DiskImageFormat { get; set; }
 	}
 
-	public class GenerateIamCredentialReportParameters : ActionParameters
+	public class GenerateIamCredentialReportParameters : AmazonActionParameters
 	{
 	}
 
-	public class GrowEbsVolumeParameters : ActionParameters
+	public class GrowEbsVolumeParameters : AmazonActionParameters
 	{
 		public string GrowVolumeMethod { get; set; }
 		public string InstanceId { get; set; }
@@ -719,16 +840,18 @@ namespace Skeddly.Model
 		public string DeleteOnTerminate { get; set; }
 	}
 
-	public class InvokeLambdaFunctionParameters : ActionParameters
+	public class InvokeLambdaFunctionParameters : AmazonActionParameters
 	{
 		public string FunctionName { get; set; }
 		public string Arguments { get; set; }
 	}
 
-	public class LaunchInstanceParameters : ActionParameters
+	public class LaunchInstanceParameters : AmazonActionParameters
 	{
 		public string ImageIdentificationMethod { get; set; }
 		public string AmiImageId { get; set; }
+		public AmiImageNameComparison ImageNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
 
 		public int MinNumber { get; set; }
 		public int MaxNumber { get; set; }
@@ -751,11 +874,14 @@ namespace Skeddly.Model
 		public string UserData { get; set; }
 
 		public string InstanceName { get; set; }
+		public string LoadBalancerName { get; set; }
+		public string IamInstanceProfileName { get; set; }
+		public string DirectoryServiceDomain { get; set; }
 
 		public int? TerminateTimeInSeconds { get; set; }
 	}
 
-	public class ModifyS3ObjectsParameters : ActionParameters
+	public class ModifyS3ObjectsParameters : AmazonActionParameters
 	{
 		public string BucketName { get; set; }
 		public string Prefix { get; set; }
@@ -763,7 +889,7 @@ namespace Skeddly.Model
 		public string StorageClass { get; set; }
 	}
 
-	public class PublishSnsMessageParameters : ActionParameters
+	public class PublishSnsMessageParameters : AmazonActionParameters
 	{
 		public string SnsTopicArn { get; set; }
 
@@ -796,7 +922,7 @@ namespace Skeddly.Model
 		public string HttpsMessage { get; set; }
 	}
 
-	public class RebootElastiCacheClustersParameters : ActionParameters
+	public class RebootElastiCacheClustersParameters : AmazonActionParameters
 	{
 		public string ClusterIdentificationMethod { get; set; }
 		public ElastiCacheClusterIdComparison ClusterIdComparison { get; set; }
@@ -804,13 +930,13 @@ namespace Skeddly.Model
 		public bool IsTest { get; set; }
 	}
 
-	public class RebootInstanceParameters : ActionParameters
+	public class RebootInstanceParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
 	}
 
-	public class RebootRdsInstancesParameters : ActionParameters
+	public class RebootRdsInstancesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public RdsInstanceIdComparison InstanceIdComparison { get; set; }
@@ -818,7 +944,7 @@ namespace Skeddly.Model
 		public bool IsForceFailover { get; set; }
 	}
 
-	public class RegisterInstanceWithLoadBalancerParameters : ActionParameters
+	public class RegisterInstanceWithLoadBalancerParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
@@ -828,7 +954,7 @@ namespace Skeddly.Model
 		public int? DeregisterTimeInSeconds { get; set; }
 	}
 
-	public class RequestSpotInstanceParameters : ActionParameters
+	public class RequestSpotInstanceParameters : AmazonActionParameters
 	{
 		public string ImageIdentificationMethod { get; set; }
 		public string AmiImageId { get; set; }
@@ -855,7 +981,7 @@ namespace Skeddly.Model
 		public string TerminateTimeFrame { get; set; }
 	}
 
-	public class ResizeRedshiftClusterParameters : ActionParameters
+	public class ResizeRedshiftClusterParameters : AmazonActionParameters
 	{
 		public string ClusterIdentificationMethod { get; set; }
 		public string ClusterId { get; set; }
@@ -866,16 +992,13 @@ namespace Skeddly.Model
 		public int? RevertTimeInSeconds { get; set; }
 	}
 
-	public class ResourceReportParameters : ActionParameters
+	public class ResourceReportParameters : AmazonActionParameters
 	{
-		public bool IsIncludeEc2 { get; set; }
-		public bool IsIncludeRds { get; set; }
-		public bool IsIncludeRoute53 { get; set; }
-		public bool IsIncludeS3 { get; set; }
-		public bool IsIncludeElb { get; set; }
+		public IEnumerable<string> ResourceToInclude { get; set; }
+		public string TargetType { get; set; }
 	}
 
-	public class RestoreRdsInstanceParameters : ActionParameters
+	public class RestoreRdsInstanceParameters : AmazonActionParameters
 	{
 		public string SnapshotIdentificationMethod { get; set; }
 		public string SnapshotId { get; set; }
@@ -907,27 +1030,32 @@ namespace Skeddly.Model
 		public string FinalSnapshotId { get; set; }
 	}
 
-	public class RestoreRedshiftClusterParameters : ActionParameters
+	public class RestoreRedshiftClusterParameters : AmazonActionParameters
 	{
 		public string SnapshotIdentificationMethod { get; set; }
 		public string SnapshotId { get; set; }
 		public string ClusterId { get; set; }
 
 		public string NewClusterId { get; set; }
-		public string AvailabilityZone { get; set; }
 
+		public string AvailabilityZone { get; set; }
 		public string ClusterSubnetGroupName { get; set; }
 		public string SecurityGroup { get; set; }
 		public string ClusterParameterGroupName { get; set; }
+		public bool? IsPubliclyAccessible { get; set; }
+		public bool? IsEnhancedVpcRouting { get; set; }
+		public IEnumerable<string> IamRoles { get; set; }
 
 		public int? DeleteTimeInSeconds { get; set; }
 		public string FinalSnapshotId { get; set; }
 	}
 
-	public class RunningTimeReportParameters : ActionParameters
+	public class RunningTimeReportParameters : AmazonActionParameters
 	{
-		public string InstanceIdentificationMethods { get; set; }
-		public List<string> InstanceIds { get; set; }
+		public string InstanceIdentificationMethod { get; set; }
+		public IEnumerable<string> InstanceIds { get; set; }
+		public InstanceNameComparison InstanceNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
 
 		public int MinimumMinutesForBreak { get; set; }
 
@@ -935,7 +1063,7 @@ namespace Skeddly.Model
 		public int? TimePeriodDays { get; set; }
 	}
 
-	public class StartInstanceParameters : ActionParameters
+	public class StartInstanceParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
@@ -943,6 +1071,7 @@ namespace Skeddly.Model
 
 		public string ElasticIp { get; set; }
 		public string LoadBalancerName { get; set; }
+		public string ResumeAutoScalingProcesses { get; set; }
 
 		public bool IsCheckReachability { get; set; }
 		public bool IsSendEmailOnReachabilityFailure { get; set; }
@@ -950,15 +1079,15 @@ namespace Skeddly.Model
 		public int? StopTimeInSeconds { get; set; }
 	}
 
-	public class StartMultipleInstancesParameters : ActionParameters
+	public class StartMultipleInstancesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
-		public List<string> InstanceIds { get; set; }
+		public IEnumerable<StartMultipleInstancesInstance> Instances { get; set; }
 		public InstanceNameComparison InstanceNameComparison { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
 
-		public string ElasticIp { get; set; }
 		public string LoadBalancerName { get; set; }
+		public string ResumeAutoScalingProcesses { get; set; }
 
 		public bool IsCheckReachability { get; set; }
 		public bool IsSendEmailOnReachabilityFailure { get; set; }
@@ -966,7 +1095,13 @@ namespace Skeddly.Model
 		public int? StopTimeInSeconds { get; set; }
 	}
 
-	public class StartSwfWorkflowExecutionParameters : ActionParameters
+	public class StartMultipleInstancesInstance
+	{
+		public string InstanceId { get; set; }
+		public string ElasticIp { get; set; }
+	}
+
+	public class StartSwfWorkflowExecutionParameters : AmazonActionParameters
 	{
 		public string Domain { get; set; }
 		public string WorkflowTypeName { get; set; }
@@ -975,36 +1110,47 @@ namespace Skeddly.Model
 		public string Input { get; set; }
 		public string TaskListName { get; set; }
 
-		public List<string> WorkflowTags { get; set; }
+		public IEnumerable<string> WorkflowTags { get; set; }
 	}
 
-	public class StopInstanceParameters : ActionParameters
+	public class StopInstanceParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
 		public string InstanceName { get; set; }
 
 		public bool IsForceStop { get; set; }
+		public string SuspendAutoScalingProcesses { get; set; }
+
+		public int? RestartTimeInSeconds { get; set; }
+		public string RestartTimeFrame { get; set; }
 	}
 
-	public class StopMultipleInstancesParameters : ActionParameters
+	public class StopMultipleInstancesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
-		public List<string> InstanceIds { get; set; }
+		public IEnumerable<string> InstanceIds { get; set; }
 		public InstanceNameComparison InstanceNameComparison { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
 
+		public string StopLimit { get; set; }
+		public int? StopLimitValue { get; set; }
+
 		public bool IsForceStop { get; set; }
+		public string SuspendAutoScalingProcesses { get; set; }
+
+		public int? RestartTimeInSeconds { get; set; }
+		public string RestartTimeFrame { get; set; }
 	}
 
-	public class TerminateInstanceParameters : ActionParameters
+	public class TerminateInstanceParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
 		public string InstanceName { get; set; }
 	}
 
-	public class UpdateAutoScalingGroupParameters : ActionParameters
+	public class UpdateAutoScalingGroupParameters : AmazonActionParameters
 	{
 		public string GroupName { get; set; }
 		public string LaunchConfigurationName { get; set; }
@@ -1016,7 +1162,7 @@ namespace Skeddly.Model
 		public int? RestoreTimeInSeconds { get; set; }
 	}
 
-	public class UpdateRoute53RecordParameters : ActionParameters
+	public class UpdateRoute53RecordParameters : AmazonActionParameters
 	{
 		public string HostedZoneName { get; set; }
 		public string RecordName { get; set; }
@@ -1026,7 +1172,7 @@ namespace Skeddly.Model
 		public string InstanceId { get; set; }
 	}
 
-	public class CreateCloudFormationStackParameters : ActionParameters
+	public class CreateCloudFormationStackParameters : AmazonActionParameters
 	{
 		public string StackName { get; set; }
 		public string TemplateFormat { get; set; }
@@ -1035,9 +1181,9 @@ namespace Skeddly.Model
 		public string TemplateBucketName { get; set; }
 		public string TemplateObjectKey { get; set; }
 		
-		public List<CloudFormationParameter> Parameters { get; set; }
-		public List<string> Capabilities { get; set; }
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<CloudFormationParameter> Parameters { get; set; }
+		public IEnumerable<string> Capabilities { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 
 		public int? TimeoutInMinutes { get; set; }
 		public string FailureBehaviour { get; set; }
@@ -1052,11 +1198,14 @@ namespace Skeddly.Model
 		public bool UsePreviousValue { get; set; }
 	}
 
-	public class DeleteCloudFormationStacksParameters : ActionParameters
+	public class DeleteCloudFormationStacksParameters : AmazonActionParameters
 	{
 		public string StackIdentificationMethod { get; set; }
 		public StackNameComparison StackNameComparison { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public int? OlderThanDays { get; set; }
+		public int? DaysSinceLastUpdate { get; set; }
 
 		public bool IsTest { get; set; }
 	}
@@ -1067,7 +1216,7 @@ namespace Skeddly.Model
 		public string CompareType { get; set; }
 	}
 
-	public class ChangeDynamoDbTablesParameters : ActionParameters
+	public class ChangeDynamoDbTablesParameters : AmazonActionParameters
 	{
 		public string TableIdentificationMethod { get; set; }
 		public TableNameComparison TableNameComparison { get; set; }
@@ -1084,7 +1233,7 @@ namespace Skeddly.Model
 		public string CompareType { get; set; }
 	}
 
-	public class CreateStorageGatewaySnapshotsParameters : ActionParameters
+	public class CreateStorageGatewaySnapshotsParameters : AmazonActionParameters
 	{
 		public string VolumeIdentificationMethod { get; set; }
 		public GatewayNameComparison GatewayNameComparison { get; set; }
@@ -1092,7 +1241,7 @@ namespace Skeddly.Model
 
 		public string Description { get; set; }
 		public string SnapshotName { get; set; }
-		public List<Tag> Tags { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
 
 		public string TargetRegionName { get; set; }
 	}
@@ -1103,7 +1252,7 @@ namespace Skeddly.Model
 		public string CompareType { get; set; }
 	}
 
-	public class EraseDeletedS3ObjectsParameters : ActionParameters
+	public class EraseDeletedS3ObjectsParameters : AmazonActionParameters
 	{
 		public string BucketName { get; set; }
 		public string Prefix { get; set; }
@@ -1111,11 +1260,11 @@ namespace Skeddly.Model
 		public bool IsTest { get; set; }
 	}
 
-	public class SendSsmCommandParameters : ActionParameters
+	public class SendSsmCommandParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 
-		public List<string> InstanceIds { get; set; }
+		public IEnumerable<string> InstanceIds { get; set; }
 
 		public InstanceNameComparison InstanceNameComparison { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
@@ -1133,7 +1282,7 @@ namespace Skeddly.Model
 		public IEnumerable<string> Values { get; set; }
 	}
 
-	public class DeleteEbsVolumesParameters : ActionParameters
+	public class DeleteEbsVolumesParameters : AmazonActionParameters
 	{
 		public string VolumeIdentificationMethod { get; set; }
 		public IEnumerable<string> VolumeIds { get; set; }
@@ -1141,6 +1290,12 @@ namespace Skeddly.Model
 
 		public DaysDetached DaysDetached { get; set; }
 		public CreateEbsSnapshot CreateEbsSnapshot { get; set; }
+
+		public string TargetType { get; set; }
+		public IEnumerable<string> TargetEmails { get; set; }
+		public string ReportFormat { get; set; }
+
+		public bool IsTest { get; set; }
 	}
 
 	public class CreateEbsSnapshot
@@ -1156,7 +1311,7 @@ namespace Skeddly.Model
 		public string ResourceTagName { get; set; }
 	}
 
-	public class RebootEc2InstancesParameters : ActionParameters
+	public class RebootEc2InstancesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public IEnumerable<string> InstanceIds { get; set; }
@@ -1164,7 +1319,7 @@ namespace Skeddly.Model
 		public InstanceNameComparison InstanceNameComparison { get; set; }
 	}
 
-	public class TerminateEc2InstancesParameters : ActionParameters
+	public class TerminateEc2InstancesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public IEnumerable<string> InstanceIds { get; set; }
@@ -1172,6 +1327,7 @@ namespace Skeddly.Model
 		public InstanceNameComparison InstanceNameComparison { get; set; }
 
 		public int? OlderThanDays { get; set; }
+		public IEnumerable<string> InstanceStates { get; set; }
 
 		public int? MinimumToKeep { get; set; }
 		public RandomTermination RandomTermination { get; set; }
@@ -1196,7 +1352,7 @@ namespace Skeddly.Model
 		public IEnumerable<AmiImageTag> Tags { get; set; }
 	}
 
-	public class LaunchEc2ScheduledInstancesParameters : ActionParameters
+	public class LaunchEc2ScheduledInstancesParameters : AmazonActionParameters
 	{
 		public string ScheduledInstanceIdentificationMethod { get; set; }
 		public IEnumerable<string> ScheduledInstanceIds { get; set; }
@@ -1205,7 +1361,7 @@ namespace Skeddly.Model
 		public string VpcSubnetId { get; set; }
 		public IEnumerable<string> SecurityGroups { get; set; }
 		public string KeyPair { get; set; }
-		public string IamInstanceProfile { get; set; }
+		public string IamInstanceProfileName { get; set; }
 
 		public string UserData { get; set; }
 		public string UserDataFormat { get; set; }
@@ -1229,7 +1385,7 @@ namespace Skeddly.Model
 		public string CompareType { get; set; }
 	}
 
-	public class DeleteElasticBeanstalkApplicationVersionsParameters : ActionParameters
+	public class DeleteElasticBeanstalkApplicationVersionsParameters : AmazonActionParameters
 	{
 		public string ApplicationIdentificationMethod { get; set; }
 		public ApplicationNameComparison ApplicationNameComparison { get; set; }
@@ -1249,8 +1405,8 @@ namespace Skeddly.Model
 
 	public class ChangeEbsVolumeSize
 	{
-		public int SizeValue { get; set; }
 		public string SizeType { get; set; }
+		public int SizeValue { get; set; }
 	};
 
 	public class ChangeEbsVolumeType
@@ -1265,9 +1421,15 @@ namespace Skeddly.Model
 		public string KmsKeyId { get; set; }
 	};
 
-	public class ChangeEbsVolumesParameters : ActionParameters
+	public class ChangeDeleteOnTerminate
+	{
+		public string DeleteOnTerminate { get; set; }
+	}
+
+	public class ChangeEbsVolumesParameters : AmazonActionParameters
 	{
 		public string VolumeIdentificationMethod { get; set; }
+
 		public IEnumerable<string> VolumeIds { get; set; }
 		public IEnumerable<string> InstanceIds { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
@@ -1279,9 +1441,454 @@ namespace Skeddly.Model
 		public ChangeEbsVolumeSize Size { get; set; }
 		public ChangeEbsVolumeType VolumeType { get; set; }
 		public ChangeEbsVolumeEncryption Encryption { get; set; }
-		public string DeleteOnTerminate { get; set; }
+		public ChangeDeleteOnTerminate DeleteOnTerminate { get; set; }
 
 		public bool IsDeleteOldVolumes { get; set; }
 		public bool IsDeleteSnapshots { get; set; }
+	}
+
+	public class CloudWatchNamespaceComparison
+	{
+		public string CompareType { get; set; }
+		public string Namespace { get; set; }
+	}
+
+	public class DeleteUnusedCloudWatchAlarmsParameters : AmazonActionParameters
+	{
+		public string AlarmIdentificationMethod { get; set; }
+		public CloudWatchNamespaceComparison NamespaceComparison { get; set; }
+
+		public string DeleteCriteria { get; set; }
+
+		public bool IsTest { get; set; }
+	}
+
+	public class LoadBalancerNameComparison
+	{
+		public string LoadBalancerName { get; set; }
+		public string CompareType { get; set; }
+	}
+
+	public class DaysUnused
+	{
+		public int NumDays { get; set; }
+		public string ResourceTagName { get; set; }
+	}
+
+	public class DeleteUnusedElasticLoadBalancersParameters : AmazonActionParameters
+	{
+		public string LoadBalancerIdentificationMethod { get; set; }
+		public LoadBalancerNameComparison LoadBalancerNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public DaysUnused DaysUnused { get; set; }
+	}
+
+	public class GroupNameComparison
+	{
+		public string GroupName { get; set; }
+		public string CompareType { get; set; }
+	}
+
+	public class UpdateAutoScalingGroupsParameters : AmazonActionParameters
+	{
+		public string GroupIdentificationMethod { get; set; }
+		public GroupNameComparison GroupNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string LaunchConfigurationName { get; set; }
+		public int? MinSize { get; set; }
+		public int? MaxSize { get; set; }
+		public int? DesiredSize { get; set; }
+
+		public int? RestoreTimeInSeconds { get; set; }
+	}
+
+	public class BucketNameComparison
+	{
+		public string BucketName { get; set; }
+		public string CompareType { get; set; }
+	}
+
+	public class AmazonApplyS3BucketPolicyParameters : AmazonActionParameters
+	{
+		public string BucketIdentificationMethod { get; set; }
+		public BucketNameComparison BucketNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string PolicyType { get; set; }
+		public string CustomPolicy { get; set; }
+
+		public string ApplyMethod { get; set; }
+
+		public bool IsTest { get; set; }
+	}
+
+	public class TagEbsVolumesParameters : AmazonActionParameters
+	{
+		public string VolumeIdentificationMethod { get; set; }
+		public IEnumerable<string> VolumeIds { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string CopyInstanceTagsMethod { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
+		public string SetTagsMethod { get; set; }
+		public bool IsTest { get; set; }
+	}
+
+	public class Ec2InstancesReportParameters : AmazonActionParameters
+	{
+		public string InstanceIdentificationMethod { get; set; }
+		public IEnumerable<string> InstanceIds { get; set; }
+		public InstanceNameComparison InstanceNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+	}
+
+	public class RebootWorkSpacesWorkspacesParameters : AmazonActionParameters
+	{
+		public string WorkspaceIdentificationMethod { get; set; }
+		public IEnumerable<string> WorkspaceIds { get; set; }
+		public IEnumerable<string> UserNames { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+	}
+
+	public class RebuildWorkSpacesWorkspacesParameters : AmazonActionParameters
+	{
+		public string WorkspaceIdentificationMethod { get; set; }
+		public IEnumerable<string> WorkspaceIds { get; set; }
+		public IEnumerable<string> UserNames { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+	}
+
+	public class DescriptionComparison
+	{
+		public string Description { get; set; }
+		public string CompareType { get; set; }
+	}
+
+	public class TagEbsSnapshotsParameters : AmazonActionParameters
+	{
+		public string SnapshotIdentificationMethod { get; set; }
+		public IEnumerable<string> SnapshotIds { get; set; }
+		public DescriptionComparison DescriptionComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string CopyVolumeTagsMethod { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
+		public string SetTagsMethod { get; set; }
+		public bool IsTest { get; set; }
+	}
+
+	public class ChangeEc2InstancesParameters : AmazonActionParameters
+	{
+		public string InstanceIdentificationMethod { get; set; }
+		public IEnumerable<string> InstanceIds { get; set; }
+		public InstanceNameComparison InstanceNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string DeregisterFromLoadBalancers { get; set; }
+
+		public string InstanceType { get; set; }
+		public bool? IsEbsOptimized { get; set; }
+		public bool? IsEnableTerminationProtection { get; set; }
+
+		public int? RevertTimeInSeconds { get; set; }
+	}
+
+	public class StopWorkSpacesWorkspacesParameters : AmazonActionParameters
+	{
+		public string WorkspaceIdentificationMethod { get; set; }
+		public IEnumerable<string> WorkspaceIds { get; set; }
+		public IEnumerable<string> UserNames { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+	}
+
+	public class CreateCloudTrailTrailsParameters : AmazonActionParameters
+	{
+		public string TrailName { get; set; }
+		public string CreationRule { get; set; }
+		public string RegionsToApply { get; set; }
+		public string MultiRegionLocation { get; set; }
+		public string GlobalServiceEventsLocation { get; set; }
+
+		public string BucketName { get; set; }
+		public string Prefix { get; set; }
+		public string KmsKeyId { get; set; }
+		public bool IsEnableLogFileValidation { get; set; }
+
+		public string SnsTopicName { get; set; }
+		public string CloudWatchLogsLogGroupArn { get; set; }
+		public string CloudWatchLogsRoleArn { get; set; }
+
+		public IEnumerable<Tag> Tags { get; set; }
+	}
+
+	public class StartWorkSpacesWorkspacesParameters : AmazonActionParameters
+	{
+		public string WorkspaceIdentificationMethod { get; set; }
+		public IEnumerable<string> WorkspaceIds { get; set; }
+		public IEnumerable<string> UserNames { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public int? StopTimeInSeconds { get; set; }
+	}
+
+	public class DeleteUnusedWorkSpacesWorkspacesParameters : AmazonActionParameters
+	{
+		public string WorkspaceIdentificationMethod { get; set; }
+		public IEnumerable<string> WorkspaceIds { get; set; }
+		public IEnumerable<string> UserNames { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public int ReportTimeInDays { get; set; }
+		public string ReportFormat { get; set; }
+		public int DeleteTimeInDays { get; set; }
+		public string CheckType { get; set; }
+		public string CloudWatchGapsAllowed { get; set; }
+
+		public bool IsTest { get; set; }
+	}
+
+	public class CreateLightsailInstanceSnapshotsParameters : AmazonActionParameters
+	{
+		public string InstanceIdentificationMethod { get; set; }
+		public InstanceNameComparison InstanceNameComparison { get; set; }
+
+		public string SnapshotName { get; set; }
+
+		public string ConsistencyMethod { get; set; }
+	}
+
+	public class DeleteLightsailInstanceSnapshotsParameters : AmazonActionParameters
+	{
+		public string SnapshotIdentificationMethod { get; set; }
+		public InstanceNameComparison InstanceNameComparison { get; set; }
+		public SnapshotNameComparison SnapshotNameComparison { get; set; }
+
+		public string DeleteScheme { get; set; }
+
+		public FirstInFirstOutDeleteSchemeParameters FirstInFirstOutParameters { get; set; }
+		public GrandfatherFatherSonDeleteSchemeParameters GrandfatherFatherSonParameters { get; set; }
+
+		public string GroupingMethod { get; set; }
+
+		public bool IsTest { get; set; }
+	}
+
+	public class CreateLightsailInstancesInstance
+	{
+		public string InstanceName { get; set; }
+		public string StaticIpName { get; set; }
+	}
+
+	public class CreateLightsailInstancesFromSnapshotsParameters : AmazonActionParameters
+	{
+		public IEnumerable<CreateLightsailInstancesInstance> Instances { get; set; }
+		public string DuplicateInstanceResolutionMethod { get; set; }
+
+		public string SnapshotIdentificationMethod { get; set; }
+		public InstanceNameComparison InstanceNameComparison { get; set; }
+		public SnapshotNameComparison SnapshotNameComparison { get; set; }
+
+		public string AvailabilityZone { get; set; }
+		public string BundleId { get; set; }
+		public string KeyPairName { get; set; }
+
+		public int? DeleteTimeInSeconds { get; set; }
+		public string FinalSnapshotName { get; set; }
+	}
+
+	public class AmazonAttachIamRoleToEc2InstancesParameters : AmazonActionParameters
+	{
+		public string InstanceIdentificationMethod { get; set; }
+		public IEnumerable<string> InstanceIds { get; set; }
+		public InstanceNameComparison InstanceNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string IamRoleName { get; set; }
+	}
+
+	public class RunAthenaQueryParameters : AmazonActionParameters
+	{
+		public string QueryType { get; set; }
+		public string QueryName { get; set; }
+		public string QueryString { get; set; }
+		public string Database { get; set; }
+
+		public string OutputBucketName { get; set; }
+		public string OutputPrefix { get; set; }
+		public string OutputEncryptionMethod { get; set; }
+		public string OutputKmsKeyId { get; set; }
+
+		public string TargetType { get; set; }
+		public IEnumerable<string> TargetEmails { get; set; }
+		public string ReportFormat { get; set; }
+	}
+
+	public class StartRdsInstancesParameters : AmazonActionParameters
+	{
+		public string InstanceIdentificationMethod { get; set; }
+		public RdsInstanceIdComparison InstanceIdComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public int? StopTimeInSeconds { get; set; }
+		public string SnapshotId { get; set; }
+	}
+
+	public class StopRdsInstancesParameters : AmazonActionParameters
+	{
+		public string InstanceIdentificationMethod { get; set; }
+		public RdsInstanceIdComparison InstanceIdComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string SnapshotId { get; set; }
+
+		public string ChangeMultiAz { get; set; }
+		public string DeleteReplicas { get; set; }
+
+		public int? RestartTimeInSeconds { get; set; }
+		public string RestartTimeFrame { get; set; }
+	}
+
+	public class LoadBalancerRegistration
+	{
+		public string IdentificationMethod { get; set; }
+		public IEnumerable<string> LoadBalancerNames { get; set; }
+		public string CompareType { get; set; }
+		public string Value { get; set; }
+		public string ResourceTagName { get; set; }
+	}
+
+	public class TargetGroupRegistration
+	{
+		public string IdentificationMethod { get; set; }
+		public IEnumerable<string> TargetGroupNames { get; set; }
+		public string CompareType { get; set; }
+		public string Value { get; set; }
+		public string ResourceTagName { get; set; }
+
+		public IEnumerable<int> Ports { get; set; }
+	}
+
+	public class RegisterEc2InstancesWithLoadBalancersParameters : AmazonActionParameters
+	{
+		public string InstanceIdentificationMethod { get; set; }
+		public IEnumerable<string> InstanceIds { get; set; }
+		public InstanceNameComparison InstanceNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public LoadBalancerRegistration LoadBalancers { get; set; }
+		public TargetGroupRegistration TargetGroups { get; set; }
+
+		public int? DeregisterTimeInSeconds { get; set; }
+	}
+
+	public class EbsVolumeSnapshotReportParameters : AmazonActionParameters
+	{
+		public string VolumeIdentificationMethod { get; set; }
+		public IEnumerable<string> VolumeIds { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public int NumSnapshotsWarning { get; set; }
+		public int NumDaysWarning { get; set; }
+		public int NumSnapshotsAlert { get; set; }
+		public int NumDaysAlert { get; set; }
+
+		public string TargetType { get; set; }
+		public IEnumerable<string> TargetEmails { get; set; }
+		public string ReportFormat { get; set; }
+	}
+
+	public class RdsClusterIdComparison
+	{
+		public string CompareType { get; set; }
+		public string ClusterId { get; set; }
+	}
+
+	public class RestoreRdsClusterParameters : AmazonActionParameters
+	{
+		public string SnapshotIdentificationMethod { get; set; }
+
+		public RdsSnapshotIdComparison SnapshotIdComparison { get; set; }
+		public RdsClusterIdComparison ClusterIdComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string DuplicateClusterResolutionMethod { get; set; }
+
+		public string NewClusterId { get; set; }
+
+		public IEnumerable<string> SecurityGroups { get; set; }
+		public string ClusterSubnetGroupName { get; set; }
+		public string OptionGroupName { get; set; }
+		public string ClusterParameterGroupName { get; set; }
+		public string ChangeBackupRetentionPeriod { get; set; }
+		public int? NewBackupRetentionDays { get; set; }
+
+		public IEnumerable<Tag> Tags { get; set; }
+
+		public string NewInstanceId { get; set; }
+		public string DbInstanceClass { get; set; }
+		public string ChangePubliclyAccessible { get; set; }
+
+		public int? DeleteTimeInSeconds { get; set; }
+		public string FinalSnapshotId { get; set; }
+	}
+
+	public class ExportDynamoDbTablesParameters : AmazonActionParameters
+	{
+		public string TableIdentificationMethod { get; set; }
+		public IEnumerable<string> TableNames { get; set; }
+		public TableNameComparison TableNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public int ReadThroughputPercent { get; set; }
+
+		public string BucketName { get; set; }
+		public string Prefix { get; set; }
+		public string TargetCredentialId { get; set; }
+		public string OutputFormat { get; set; }
+	}
+
+	public class CreateDynamoDbBackupsParameters : AmazonActionParameters
+	{
+		public string TableIdentificationMethod { get; set; }
+		public IEnumerable<string> TableNames { get; set; }
+		public TableNameComparison TableNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string BackupName { get; set; }
+		public IEnumerable<Tag> Tags { get; set; }
+
+		public string TargetRegionName { get; set; }
+		public string TargetCredentialId { get; set; }
+	}
+
+	public class BackupNameComparison
+	{
+		public string BackupName { get; set; }
+		public string CompareType { get; set; }
+	}
+
+	public class DeleteDynamoDbBackupsParameters : AmazonActionParameters
+	{
+		public string BackupIdentificationMethod { get; set; }
+		public BackupNameComparison BackupNameComparison { get; set; }
+		public IEnumerable<string> TableNames { get; set; }
+		public TableNameComparison TableNameComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
+
+		public string DeleteScheme { get; set; }
+
+		public FirstInFirstOutDeleteSchemeParameters FirstInFirstOutParameters { get; set; }
+		public GrandfatherFatherSonDeleteSchemeParameters GrandfatherFatherSonParameters { get; set; }
+
+		public string GroupingMethod { get; set; }
+		public string GroupingResourceTagName { get; set; }
+
+		public string TargetType { get; set; }
+		public IEnumerable<string> TargetEmails { get; set; }
+		public string ReportFormat { get; set; }
+
+		public bool IsTest { get; set; }
 	}
 }

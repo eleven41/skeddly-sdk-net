@@ -8,5 +8,7 @@ namespace Skeddly.Model
 	public class GenerateIamPolicyRequest
 	{
 		public string CredentialId { get; set; }
+
+		public IEnumerable<string> Extras { get; set; }
 	}
 }

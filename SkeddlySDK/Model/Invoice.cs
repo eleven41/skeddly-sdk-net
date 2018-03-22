@@ -13,6 +13,7 @@ namespace Skeddly.Model
 		public decimal Taxes { get; set; }
 		public decimal OutstandingBalance { get; set; }
 		public string Status { get; set; }
+		public string CurrencyCode { get; set; }
 
 		public string AccountName { get; set; }
 

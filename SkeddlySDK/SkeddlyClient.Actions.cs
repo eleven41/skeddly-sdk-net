@@ -181,9 +181,12 @@ namespace Skeddly
 			return this.InvokeDeleteAsync("api/Actions/" + request.ActionId);
 		}
 
-		public Task ExecuteActionAsync(ExecuteActionRequest request)
+		public async Task<ExecuteActionResponse> ExecuteActionAsync(ExecuteActionRequest request)
 		{
-			return this.InvokePutAsync("api/Actions/" + request.ActionId + "/Execute");
+			return new ExecuteActionResponse()
+			{
+				ActionExecution = await this.InvokePutAsync<ActionExecution, ExecuteActionRequest>("api/Actions/" + request.ActionId + "/Execute", request)
+			};
 		}
 
 		#endregion

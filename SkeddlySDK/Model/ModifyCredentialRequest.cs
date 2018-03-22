@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Skeddly.Model
 {
-	public class UpdateCredentialRequest
+	public class ModifyCredentialRequest
 	{
 		[JsonIgnore]
 		public string CredentialId { get; set; }

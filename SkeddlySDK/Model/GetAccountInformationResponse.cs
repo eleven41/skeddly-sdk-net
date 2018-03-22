@@ -43,5 +43,12 @@ namespace Skeddly.Model
 		/// Possible values are: ok, failed.
 		/// </summary>
 		public string EmailStatus { get; set; }
+
+		/// <summary>
+		/// Status of the AWS Marketplace subscription, if any.
+		/// Possible values are: created, subscribed, subscribe-failed, unsubscribed, unsubscribe-pending, not-found
+		/// </summary>
+		public string AwsMarketplaceSubscriptionStatus { get; set; }
+
 	}
 }

@@ -110,6 +110,28 @@ namespace Skeddly
 			};
 		}
 
+		public async Task<ModifyManagedInstanceGroupResponse> ModifyManagedInstanceGroupAsync(ModifyManagedInstanceGroupRequest request)
+		{
+			List<string> queryParameters = new List<string>();
+
+			// Our response includes schedules for the new managed instance group.
+			// So we need to include a json converter so we properly
+			// deserialize into the correct derived parameter classes.
+			List<JsonConverter> jsonConverters = new List<JsonConverter>()
+			{
+				new Skeddly.JsonConverters.ManagedInstanceScheduleConverter()
+			};
+
+			string queryString = null;
+			if (queryParameters.Any())
+				queryString = "?" + String.Join("&", queryParameters);
+
+			return new ModifyManagedInstanceGroupResponse()
+			{
+				ManagedInstanceGroup = await this.InvokePutAsync<Skeddly.Model.ManagedInstanceGroup, Skeddly.Model.ModifyManagedInstanceGroupRequest>("/api/ManagedInstanceGroups/" + request.ManagedInstanceGroupId + queryString, request, jsonConverters)
+			};
+		}
+
 		#endregion
 	}
 }

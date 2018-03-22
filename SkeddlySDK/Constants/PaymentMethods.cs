@@ -14,5 +14,6 @@ namespace Skeddly.Constants
 		public const string Invoice = "invoice";
 		public const string WireTransfer = "wire-transfer";
 		public const string Cheque = "cheque";
+		public const string PaymentThroughPartner = "payment-through-partner";
 	}
 }

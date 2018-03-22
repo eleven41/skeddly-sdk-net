@@ -19,6 +19,8 @@ namespace Skeddly
 					throw new CredentialNotFoundException(errorResponse.Message);
 				else if (errorResponse.ErrorCode == "InvalidRoleOrAccessDenied")
 					return new InvalidRoleOrAccessDeniedException(errorResponse.Message);
+				else if (errorResponse.ErrorCode == "InvalidAccessKey")
+					return new InvalidAccessKeyException(errorResponse.Message);
 				else if (errorResponse.ErrorCode == "ActionExecutionNotFound")
 					return new ActionExecutionNotFoundException(errorResponse.Message);
 				else if (errorResponse.ErrorCode == "ActionNotFound")

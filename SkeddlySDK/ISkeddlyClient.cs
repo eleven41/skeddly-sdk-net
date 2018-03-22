@@ -26,7 +26,7 @@ namespace Skeddly
 		Task<ListCredentialsResponse> ListCredentialsAsync(ListCredentialsRequest request);
 		Task<GetCredentialResponse> GetCredentialAsync(GetCredentialRequest request);
 		Task<CreateCredentialResponse> CreateCredentialAsync(CreateCredentialRequest request);
-		Task<UpdateCredentialResponse> UpdateCredentialAsync(UpdateCredentialRequest request);
+		Task<ModifyCredentialResponse> ModifyCredentialAsync(ModifyCredentialRequest request);
 		Task DeleteCredentialAsync(DeleteCredentialRequest request);
 		Task<GenerateIamPolicyResponse> GenerateIamPolicyAsync(GenerateIamPolicyRequest request);
 		Task<GenerateAmazonIamRoleExternalIdResponse> GenerateAmazonIamRoleExternalIdAsync(GenerateAmazonIamRoleExternalIdRequest request);
@@ -41,7 +41,7 @@ namespace Skeddly
 		Task<GetActionTypesResponse> GetActionTypesAsync(GetActionTypesRequest request);
 		Task<GetActionRegionsResponse> GetActionRegionsAsync(GetActionRegionsRequest request);
 		Task DeleteActionAsync(DeleteActionRequest request);
-		Task ExecuteActionAsync(ExecuteActionRequest request);
+		Task<ExecuteActionResponse> ExecuteActionAsync(ExecuteActionRequest request);
 
 		#endregion
 
@@ -66,6 +66,7 @@ namespace Skeddly
 		Task<ListManagedInstanceGroupsResponse> ListManagedInstanceGroupsAsync(ListManagedInstanceGroupsRequest request);
 		Task<GetManagedInstanceGroupResponse> GetManagedInstanceGroupAsync(GetManagedInstanceGroupRequest request);
 		Task<CreateManagedInstanceGroupResponse> CreateManagedInstanceGroupAsync(CreateManagedInstanceGroupRequest request);
+		Task<ModifyManagedInstanceGroupResponse> ModifyManagedInstanceGroupAsync(ModifyManagedInstanceGroupRequest request);
 		Task DeleteManagedInstanceGroupAsync(DeleteManagedInstanceGroupRequest request);
 
 		#endregion
@@ -104,12 +105,45 @@ namespace Skeddly
 		Task<RemoveUserMfaResponse> RemoveUserMfaAsync(RemoveUserMfaRequest request);
 		Task<AttachManagedPolicyResponse> AttachManagedPolicyAsync(AttachManagedPolicyRequest request);
 		Task<DetachManagedPolicyResponse> DetachManagedPolicyAsync(DetachManagedPolicyRequest request);
+		Task DeleteUserAsync(DeleteUserRequest request);
 
 		#endregion
 
 		#region Managed Policies
 
 		Task<ListManagedPoliciesResponse> ListManagedPoliciesAsync(ListManagedPoliciesRequest request);
+
+		#endregion
+
+		#region IdentityProviders
+
+		Task<ListIdentityProvidersResponse> ListIdentityProvidersAsync(ListIdentityProvidersRequest request);
+		Task<GetIdentityProviderResponse> GetIdentityProviderAsync(GetIdentityProviderRequest request);
+		Task<CreateIdentityProviderResponse> CreateIdentityProviderAsync(CreateIdentityProviderRequest request);
+		Task<ModifyIdentityProviderResponse> ModifyIdentityProviderAsync(ModifyIdentityProviderRequest request);
+		Task DeleteIdentityProviderAsync(DeleteIdentityProviderRequest request);
+
+		#endregion
+
+		#region SSO
+
+		Task<AssumeUserWithSamlResponse> AssumeUserWithSamlAsync(AssumeUserWithSamlRequest request);
+
+		#endregion
+
+		#region ActionExclusions
+
+		Task<ListActionExclusionsResponse> ListActionExclusionsAsync(ListActionExclusionsRequest request);
+		Task<GetActionExclusionResponse> GetActionExclusionAsync(GetActionExclusionRequest request);
+		Task<CreateActionExclusionResponse> CreateActionExclusionAsync(CreateActionExclusionRequest request);
+		Task<ModifyActionExclusionResponse> ModifyActionExclusionAsync(ModifyActionExclusionRequest request);
+		Task DeleteActionExclusionAsync(DeleteActionExclusionRequest request);
+
+		#endregion
+
+		#region Repots
+
+		Task<GetEstimatedCostSavingsReportResponse> GetEstimatedCostSavingsReportAsync(GetEstimatedCostSavingsReportRequest request);
 
 		#endregion
 	}

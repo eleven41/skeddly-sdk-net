@@ -13,9 +13,11 @@ namespace Skeddly.Model
 		public string ActionVersionId { get; set; }
 
 		public string Name { get; set; }
+		public string State { get; set; }
 		public string ActionType { get; set; }
 		public string CredentialId { get; set; }
 		public string RegionName { get; set; }
+		public IEnumerable<string> RegionNames { get; set; }
 
 		public string CreatedDate { get; set; }
 		public string LastModifiedDate { get; set; }

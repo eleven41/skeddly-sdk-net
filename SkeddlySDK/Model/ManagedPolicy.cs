@@ -9,6 +9,7 @@ namespace Skeddly.Model
 	public class ManagedPolicy
 	{
 		public string ManagedPolicyId { get; set; }
+		public string ManagedPolicySrn { get; set; }
 
 		public string Name { get; set; }
 	}

@@ -26,5 +26,6 @@ namespace Skeddly.Model
 		public IEnumerable<string> ManagedInstanceIds { get; set; }
 
 		public bool IsUsedForSnsNotifications { get; set; }
+		public bool IsUsedForArchivingToS3 { get; set; }
 	}
 }

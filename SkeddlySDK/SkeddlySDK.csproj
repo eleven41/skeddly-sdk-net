@@ -12,7 +12,6 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -44,6 +43,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,10 +51,73 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnonymousCredentials.cs" />
     <Compile Include="AccessKeyCredentials.cs" />
     <Compile Include="Constants\ActionExecutionLogMoreTypes.cs" />
     <Compile Include="Constants\ActionExecutionStatuses.cs" />
+    <Compile Include="Constants\ActionStates.cs" />
+    <Compile Include="Constants\ApplyS3BucketPolicyApplyMethods.cs" />
+    <Compile Include="Constants\ApplyS3BucketPolicyPolicyTypes.cs" />
+    <Compile Include="Constants\AthenaQueryExecutionOutputEncryptionMethods.cs" />
+    <Compile Include="Constants\AthenaQueryTypes.cs" />
+    <Compile Include="Constants\AutoScalingGroupIdentificationMethods.cs" />
+    <Compile Include="Constants\AwsMarketplaceSubscriptionStatuses.cs" />
+    <Compile Include="Constants\CloudWatchAlarmIdentificationMethods.cs" />
+    <Compile Include="Constants\CopyInstanceTagsMethods.cs" />
+    <Compile Include="Constants\CopyS3ObjectsAclSettings.cs" />
+    <Compile Include="Constants\CreateAmiImagesChangeVolumeTypes.cs" />
+    <Compile Include="Constants\CreateAmiImagesVolumesToInclude.cs" />
+    <Compile Include="Constants\CreateCloudTrailTrailsCreationRules.cs" />
+    <Compile Include="Constants\CreateCloudTrailTrailsGlobalServiceEventsLocationOptions.cs" />
+    <Compile Include="Constants\CreateCloudTrailTrailsMultiRegionLocationOptions.cs" />
+    <Compile Include="Constants\CreateCloudTrailTrailsRegionsToApplyOptions.cs" />
+    <Compile Include="Constants\ConsistencyMethods.cs" />
     <Compile Include="Constants\CreditCardStatuses.cs" />
+    <Compile Include="Constants\DeleteDynamoDbBackupsDeleteSchemes.cs" />
+    <Compile Include="Constants\DeleteDynamoDbBackupsGroupingMethods.cs" />
+    <Compile Include="Constants\DeleteDynamoDbBackupsTargetTypes.cs" />
+    <Compile Include="Constants\DeleteEbsSnapshotsTargetTypes.cs" />
+    <Compile Include="Constants\DeleteEbsVolumesTargetTypes.cs" />
+    <Compile Include="Constants\DeleteLightsailInstanceSnapshotsDeleteSchemes.cs" />
+    <Compile Include="Constants\DeleteLightsailInstanceSnapshotsGroupingMethods.cs" />
+    <Compile Include="Constants\DeleteRdsSnapshotsDeleteSchemes.cs" />
+    <Compile Include="Constants\DeleteRdsSnapshotsGroupingMethods.cs" />
+    <Compile Include="Constants\DeleteUnusedWorkSpaceWorkspacesCheckTypes.cs" />
+    <Compile Include="Constants\DeleteUnusedWorkSpaceWorkspacesCloudWatchGapMethods.cs" />
+    <Compile Include="Constants\DeregisterAmiImagesDeleteSchemes.cs" />
+    <Compile Include="Constants\DeleteEbsSnapshotsDeleteSchemes.cs" />
+    <Compile Include="Constants\DeregisterAmiImagesGroupingMethods.cs" />
+    <Compile Include="Constants\DeleteEbsSnapshotsGroupingMethods.cs" />
+    <Compile Include="Constants\DeleteUnusedCloudWatchAlarmsCriterias.cs" />
+    <Compile Include="Constants\DeregisterSharedAmiImagesOptions.cs" />
+    <Compile Include="Constants\DynamoDbBackupIdentificationMethods.cs" />
+    <Compile Include="Constants\DynamoDbTableIdentificationMethods.cs" />
+    <Compile Include="Constants\EbsVolumeSnapshotReportTargetTypes.cs" />
+    <Compile Include="Constants\ExportDynamoDbTablesOutputFormats.cs" />
+    <Compile Include="Constants\LightsailDuplicateInstanceResolutionMethods.cs" />
+    <Compile Include="Constants\LightsailInstanceIdentificationMethods.cs" />
+    <Compile Include="Constants\LightsailInstanceSnapshotIdentificationMethods.cs" />
+    <Compile Include="Constants\RegisterMultipleDnsEntriesOptions.cs" />
+    <Compile Include="Constants\ReportFormats.cs" />
+    <Compile Include="Constants\ElasticLoadBalancerIdentificationMethods.cs" />
+    <Compile Include="Constants\IamPolicyExtras.cs" />
+    <Compile Include="Constants\ResourceIdentificationMethods.cs" />
+    <Compile Include="Constants\ResourceReportResources.cs" />
+    <Compile Include="Constants\ResourceReportTargetTypes.cs" />
+    <Compile Include="Constants\ResourceTypes.cs" />
+    <Compile Include="Constants\RestartTimeFrames.cs" />
+    <Compile Include="Constants\RollingInstanceStopsMethods.cs" />
+    <Compile Include="Constants\DeregisterAmiImagesTargetTypes.cs" />
+    <Compile Include="Constants\RunAthenaQueryTargetTypes.cs" />
+    <Compile Include="Constants\S3BucketIdentificationMethods.cs" />
+    <Compile Include="Constants\SecurityGroupRuleSourceTypes.cs" />
+    <Compile Include="Constants\SetTagsMethods.cs" />
+    <Compile Include="Constants\ResumeAutoScalingProcessesOptions.cs" />
+    <Compile Include="Constants\StopLimitTypes.cs" />
+    <Compile Include="Constants\StopRdsInstancesChangeMultiAzOptions.cs" />
+    <Compile Include="Constants\StopRdsInstancesDeleteReplicasOptions.cs" />
+    <Compile Include="Constants\SuspendAutoScalingProcessesOptions.cs" />
+    <Compile Include="Constants\TargetGroupIdentificationMethods.cs" />
     <Compile Include="Constants\UserStatuses.cs" />
     <Compile Include="Constants\WeeklyScheduleDaysOfWeek.cs" />
     <Compile Include="Constants\ElasticBeanstalkApplicationIdentificationMethods.cs" />
@@ -92,9 +155,45 @@
     <Compile Include="JsonConverters\ActionScheduleConverter.cs" />
     <Compile Include="JsonConverters\ActionConverter.cs" />
     <Compile Include="Model\AccountSettings.cs" />
+    <Compile Include="Model\ActionExclusion.cs" />
+    <Compile Include="Constants\ActionExclusionProcessTypes.cs" />
     <Compile Include="Model\ActionExecution.cs" />
     <Compile Include="Model\ActionExecutionDateComparesToOptions.cs" />
     <Compile Include="Model\ActionExecutionResult.cs" />
+    <Compile Include="Model\ActionExecutionTrigger.cs" />
+    <Compile Include="Model\AssumeUserWithSamlResponse.cs" />
+    <Compile Include="Model\AssumeUserWithSamlRequest.cs" />
+    <Compile Include="Model\AwsMarketplaceSubscription.cs" />
+    <Compile Include="Model\CopyVolumeTagsMethods.cs" />
+    <Compile Include="Model\CreateActionExclusionRequest.cs" />
+    <Compile Include="Model\DeleteActionExclusionRequest.cs" />
+    <Compile Include="Model\DeleteUserRequest.cs" />
+    <Compile Include="Model\EstimatedCostSavingsReport.cs" />
+    <Compile Include="Model\EstimatedCostSavingsReportItem.cs" />
+    <Compile Include="Model\GetEstimatedCostSavingsReportRequest.cs" />
+    <Compile Include="Model\GetEstimatedCostSavingsReportResponse.cs" />
+    <Compile Include="Model\InvalidAccessKeyException.cs" />
+    <Compile Include="Model\ListTimeZonesFilter.cs" />
+    <Compile Include="Model\ModifyActionExclusionRequest.cs" />
+    <Compile Include="Model\ModifyActionExclusionResponse.cs" />
+    <Compile Include="Model\CreateIdentityProviderRequest.cs" />
+    <Compile Include="Model\CreateIdentityProviderResponse.cs" />
+    <Compile Include="Model\ExecuteActionResponse.cs" />
+    <Compile Include="Model\GetActionExclusionRequest.cs" />
+    <Compile Include="Model\CreateActionExclusionResponse.cs" />
+    <Compile Include="Model\GetIdentityProviderResponse.cs" />
+    <Compile Include="Model\GetIdentityProviderRequest.cs" />
+    <Compile Include="Model\IdentityProvider.cs" />
+    <Compile Include="Model\IdentityProviderIncludes.cs" />
+    <Compile Include="Model\ListActionExclusionsFilter.cs" />
+    <Compile Include="Model\GetActionExclusionResponse.cs" />
+    <Compile Include="Model\ListActionExclusionsResponse.cs" />
+    <Compile Include="Model\ListActionExclusionsRequest.cs" />
+    <Compile Include="Model\ListIdentityProvidersResponse.cs" />
+    <Compile Include="Model\ListIdentityProvidersRequest.cs" />
+    <Compile Include="Model\DeleteIdentityProviderRequest.cs" />
+    <Compile Include="Model\ModifyManagedInstanceGroupResponse.cs" />
+    <Compile Include="Model\ModifyManagedInstanceGroupRequest.cs" />
     <Compile Include="Model\DetachManagedPolicyResponse.cs" />
     <Compile Include="Model\DetachManagedPolicyRequest.cs" />
     <Compile Include="Model\AttachManagedPolicyRequest.cs" />
@@ -105,6 +204,9 @@
     <Compile Include="Model\CreateUserResponse.cs" />
     <Compile Include="Model\ListManagedPoliciesRequest.cs" />
     <Compile Include="Model\ListManagedPoliciesResponse.cs" />
+    <Compile Include="Model\ModifyIdentityProviderRequest.cs" />
+    <Compile Include="Model\ModifyIdentityProviderResponse.cs" />
+    <Compile Include="Model\PaymentPartner.cs" />
     <Compile Include="Model\RemoveUserMfaRequest.cs" />
     <Compile Include="Model\GetAccountSettingsResponse.cs" />
     <Compile Include="Model\GetAccountSettingsRequest.cs" />
@@ -235,10 +337,15 @@
     <Compile Include="Model\SkeddlyWebException.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserIncludes.cs" />
+    <Compile Include="Model\WorkspaceIdentificationMethods.cs" />
     <Compile Include="SkeddlyClient.ActionExecutions.cs" />
     <Compile Include="SkeddlyClient.Account.cs" />
+    <Compile Include="SkeddlyClient.ActionExclusions.cs" />
+    <Compile Include="SkeddlyClient.Reports.cs" />
+    <Compile Include="SkeddlyClient.Sso.cs" />
     <Compile Include="SkeddlyClient.ManagedInstanceGroups.cs" />
     <Compile Include="SkeddlyClient.ManagedPolicies.cs" />
+    <Compile Include="SkeddlyClient.IdentityProviders.cs" />
     <Compile Include="SkeddlyClient.Users.cs" />
     <Compile Include="SkeddlyClient.TimeZones.cs" />
     <Compile Include="SkeddlyClient.Regions.cs" />
@@ -249,21 +356,14 @@
     <Compile Include="SkeddlyClient.Billing.cs" />
     <Compile Include="SkeddlyClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\UpdateCredentialRequest.cs" />
-    <Compile Include="Model\UpdateCredentialResponse.cs" />
+    <Compile Include="Model\ModifyCredentialRequest.cs" />
+    <Compile Include="Model\ModifyCredentialResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -89,9 +89,16 @@ namespace Skeddly
 			client.BaseAddress = new Uri(this.EndPoint);
 			client.DefaultRequestHeaders.Accept.Clear();
 			client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-			client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-				this.Credentials.GetAuthorizationScheme(),
-				this.Credentials.GetAuthorizationParameter());
+
+			string authScheme = this.Credentials.GetAuthorizationScheme();
+			if (!String.IsNullOrEmpty(authScheme))
+			{
+				string authParameter = this.Credentials.GetAuthorizationParameter();
+				if (String.IsNullOrEmpty(authParameter))
+					client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authScheme);
+				else
+					client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(authScheme, authParameter);
+			}
 
 			return client;
 		}
@@ -229,7 +236,12 @@ namespace Skeddly
 			}
 		}
 
-		private async Task<ResponseT> InvokePutAsync<ResponseT, RequestT>(string action, RequestT request)
+		private Task<ResponseT> InvokePutAsync<ResponseT, RequestT>(string action, RequestT request)
+		{
+			return InvokePutAsync<ResponseT, RequestT>(action, request, null);
+		}
+
+		private async Task<ResponseT> InvokePutAsync<ResponseT, RequestT>(string action, RequestT request, IEnumerable<JsonConverter> jsonConverters)
 		{
 			using (var client = CreateHttpClient())
 			{
@@ -241,7 +253,26 @@ namespace Skeddly
 					throw CreateLocalException(httpResponse.StatusCode, response);
 				}
 
-				return await httpResponse.Content.ReadAsAsync<ResponseT>();
+				if (jsonConverters != null &&
+					jsonConverters.Any())
+				{
+					var formatters = new JsonMediaTypeFormatter[] 
+					{
+						new JsonMediaTypeFormatter 
+						{
+							SerializerSettings = new JsonSerializerSettings 
+							{ 
+								Converters = jsonConverters.ToList()
+							} 
+						}
+					};
+
+					return await httpResponse.Content.ReadAsAsync<ResponseT>(formatters);
+				}
+				else
+				{
+					return await httpResponse.Content.ReadAsAsync<ResponseT>();
+				}
 			}
 		}
 

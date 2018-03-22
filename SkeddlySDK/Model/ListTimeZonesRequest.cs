@@ -8,5 +8,6 @@ namespace Skeddly.Model
 {
 	public class ListTimeZonesRequest
 	{
+		public ListTimeZonesFilter Filter { get; set; }
 	}
 }

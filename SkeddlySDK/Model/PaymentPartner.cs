@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Skeddly.Model
 {
-	public class UpdateCredentialResponse
+	public class PaymentPartner
 	{
-		public Credential Credential { get; set; }
+		public string PartnerName { get; set; }
 	}
 }

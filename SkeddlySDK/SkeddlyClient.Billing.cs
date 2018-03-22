@@ -46,6 +46,13 @@ namespace Skeddly
 
 		public async Task<GetInvoiceResponse> GetInvoiceAsync(GetInvoiceRequest request)
 		{
+			if (request == null)
+				throw new ArgumentNullException("request");
+			if (request.InvoiceId == null)
+				throw new ArgumentNullException("request.InvoiceId");
+			if (String.IsNullOrEmpty(request.InvoiceId))
+				throw new ArgumentOutOfRangeException("request.InvoiceId");
+
 			List<string> queryParameters = new List<string>();
 
 			if (request.Include != null)

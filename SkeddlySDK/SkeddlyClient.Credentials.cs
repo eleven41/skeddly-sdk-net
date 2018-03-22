@@ -59,17 +59,29 @@ namespace Skeddly
 
 		public async Task<GenerateIamPolicyResponse> GenerateIamPolicyAsync(GenerateIamPolicyRequest request)
 		{
+			List<string> queryParameters = new List<string>();
+
+			if (request.Extras != null &&
+				request.Extras.Any())
+			{
+				queryParameters.Add("extras=" + String.Join(",", request.Extras));
+			}
+
+			string queryString = null;
+			if (queryParameters.Any())
+				queryString = "?" + String.Join("&", queryParameters);
+
 			return new GenerateIamPolicyResponse()
 			{
-				IamPolicy = await this.InvokeGetAsync<string>("api/Credentials/" + request.CredentialId + "/IamPolicy")
+				IamPolicy = await this.InvokeGetAsync<string>("api/Credentials/" + request.CredentialId + "/IamPolicy" + queryString)
 			};
 		}
 
-		public async Task<UpdateCredentialResponse> UpdateCredentialAsync(UpdateCredentialRequest request)
+		public async Task<ModifyCredentialResponse> ModifyCredentialAsync(ModifyCredentialRequest request)
 		{
-			return new UpdateCredentialResponse()
+			return new ModifyCredentialResponse()
 			{
-				Credential = await this.InvokePutAsync<Credential, UpdateCredentialRequest>("api/Credentials/" + request.CredentialId, request)
+				Credential = await this.InvokePutAsync<Credential, ModifyCredentialRequest>("api/Credentials/" + request.CredentialId, request)
 			};
 		}
 

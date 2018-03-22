@@ -11,5 +11,6 @@ namespace Skeddly.Constants
 		public const string Active = "active";
 		public const string Expired = "expired";
 		public const string Deactivated = "deactivated";
+		public const string Unsubscribed = "unsubscribed";
 	}
 }

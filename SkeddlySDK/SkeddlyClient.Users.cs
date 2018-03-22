@@ -168,6 +168,28 @@ namespace Skeddly
 			};
 		}
 
+		public Task DeleteUserAsync(DeleteUserRequest request)
+		{
+			// Verify required parameters
+			if (request == null)
+				throw new ArgumentNullException("request");
+			if (String.IsNullOrWhiteSpace(request.UserId))
+				throw new ArgumentNullException("request.UserId");
+
+			List<string> queryParameters = new List<string>();
+
+			//if (request.Include != null)
+			//{
+			//	queryParameters.Add("include=" + String.Join(",", request.Include));
+			//}
+
+			string queryString = null;
+			if (queryParameters.Any())
+				queryString = "?" + String.Join("&", queryParameters);
+
+			return this.InvokeDeleteAsync("/api/Users/" + request.UserId + queryString);
+		}
+
 		#endregion
 	}
 }

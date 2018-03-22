@@ -18,6 +18,7 @@ namespace Skeddly.Model
 		public string AccountStatus { get; set; }
 		public string EmailStatus { get; set; }
 		public string CreditCardStatus { get; set; }
+		public string AwsMarketplaceSubscriptionStatus { get; set; }
 
 		public IEnumerable<UnpaidInvoice> UnpaidInvoices { get; set; }
 	}

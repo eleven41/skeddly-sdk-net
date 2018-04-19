@@ -11,6 +11,7 @@
     <PackageProjectUrl>https://github.com/eleven41/skeddly-sdk-net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/eleven41/skeddly-sdk-net</RepositoryUrl>
     <Version>1.0.0</Version>
+    <Description>For use with the Skeddly SDK for .NET. Extension methods for configuration of .NET Core application.</Description>
   </PropertyGroup>
 
   <ItemGroup>

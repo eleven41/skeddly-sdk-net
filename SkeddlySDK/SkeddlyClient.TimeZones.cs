@@ -24,7 +24,7 @@ namespace Skeddly
 				if (request.Filter.TimeZoneIds != null)
 				{
 					var encodedTimeZoneIds = request.Filter.TimeZoneIds
-						.Select(t => System.Web.HttpUtility.UrlEncode(t));
+						.Select(t => Skeddly.Helpers.WebHelpers.UrlEncode(t));
 
 					queryParameters.Add("filter.timeZoneIds=" + String.Join(",", encodedTimeZoneIds));
 				}
@@ -47,7 +47,7 @@ namespace Skeddly
 
 			List<string> queryParameters = new List<string>();
 
-			string encodedTimeZoneId = System.Web.HttpUtility.UrlEncode(request.TimeZoneId);
+			string encodedTimeZoneId = Skeddly.Helpers.WebHelpers.UrlEncode(request.TimeZoneId);
 			queryParameters.Add("filter.timeZoneIds=" + encodedTimeZoneId);
 
 			string queryString = null;

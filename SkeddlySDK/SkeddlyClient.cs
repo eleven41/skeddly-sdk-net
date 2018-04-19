@@ -19,19 +19,21 @@ namespace Skeddly
     {
 		/// <summary>
 		/// Initializes a new instance of the SkeddlyClient class.
-		/// Access key credentials will be retrieved from the SkeddlyAccessKeyId
-		/// appSettings value.
+		/// Configuration will be retrieved from the
+		/// appSettings section.
 		/// </summary>
 		public SkeddlyClient()
 		{
+			SkeddlyOptions options = new SkeddlyOptions();
+
 			// Try reading from the configuration
-			string accessKeyId = System.Configuration.ConfigurationManager.AppSettings["SkeddlyAccessKeyId"];
-			if (String.IsNullOrEmpty(accessKeyId))
+			options.AccessKeyId = Skeddly.Helpers.ConfigurationHelpers.AppSetting("SkeddlyAccessKeyId");
+			if (String.IsNullOrEmpty(options.AccessKeyId))
 				throw new Exception("SkeddlyAccessKeyId not set in configuration");
+
+			options.EndPoint = Skeddly.Helpers.ConfigurationHelpers.AppSetting("SkeddlyEndPoint");
 			
-			this.Credentials = new AccessKeyCredentials(accessKeyId);
-			
-			Init();
+			Init(options);
 		}
 
 		/// <summary>
@@ -41,9 +43,17 @@ namespace Skeddly
 		/// <param name="accessKeyId">Access key ID to use as credentials.</param>
 		public SkeddlyClient(string accessKeyId)
 		{
-			this.Credentials = new AccessKeyCredentials(accessKeyId);
+			if (accessKeyId == null)
+				throw new ArgumentNullException("accessKeyId");
+			if (String.IsNullOrEmpty(accessKeyId))
+				throw new ArgumentOutOfRangeException("accessKeyId");
 
-			Init();
+			SkeddlyOptions options = new SkeddlyOptions()
+			{
+				AccessKeyId = accessKeyId,
+			};
+
+			Init(options);
 		}
 
 		/// <summary>
@@ -53,9 +63,24 @@ namespace Skeddly
 		/// <param name="credentials">Credentials to use.</param>
 		public SkeddlyClient(ISkeddlyCredentials credentials)
 		{
-			this.Credentials = credentials;
+			if (credentials == null)
+				throw new ArgumentNullException("credentials");
 
-			Init();
+			SkeddlyOptions options = new SkeddlyOptions()
+			{
+				Credentials = credentials,
+			};
+
+			Init(options);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the SkeddlyClient class.
+		/// Configuration will be retrieved from the SkeddlyOptions object.
+		/// </summary>
+		public SkeddlyClient(SkeddlyOptions options)
+		{
+			Init(options);
 		}
 
 		/// <summary>
@@ -68,15 +93,24 @@ namespace Skeddly
 		/// </summary>
 		public string EndPoint { get; set; }
 
-		protected virtual void Init()
+		protected virtual void Init(SkeddlyOptions options)
 		{
-			string endPoint = System.Configuration.ConfigurationManager.AppSettings["SkeddlyEndPoint"];
-			if (!String.IsNullOrEmpty(endPoint))
-				this.EndPoint = endPoint;
+			if (options == null)
+				throw new ArgumentNullException("options");
+
+			if (options.Credentials != null)
+				this.Credentials = options.Credentials;
+			else if (!String.IsNullOrEmpty(options.AccessKeyId))
+				this.Credentials = new AccessKeyCredentials(options.AccessKeyId);
+			else
+				throw new InvalidOperationException("AccessKeyId or Credentials must be configured.");
+
+			if (!String.IsNullOrEmpty(options.EndPoint))
+				this.EndPoint = options.EndPoint;
 			else
 				this.EndPoint = "https://api.skeddly.com";
 		}
-
+		
 		public void Dispose()
 		{
 			// Nothing to do for now

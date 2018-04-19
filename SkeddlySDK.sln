@@ -3,7 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2011
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkeddlySDK", "SkeddlySDK\SkeddlySDK.csproj", "{EB43E4AF-45A2-42B0-B4B5-E94B25E0BCFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkeddlySDK", "SkeddlySDK\SkeddlySDK.csproj", "{C0EBE573-8385-4F9C-B6D5-2563CEFF219C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{5CD35CBA-55A4-469F-95E1-F06D49FB8C83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNet461Console", "Samples\DotNet461Console\DotNet461Console.csproj", "{01899E17-B6C2-44F5-8F82-599D07FCD468}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetCoreConsole", "Samples\DotNetCoreConsole\DotNetCoreConsole.csproj", "{84AA84D7-D6BE-4F22-9AB4-E3216F289C98}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkeddlySDK.Extensions.NETCore.Setup", "SkeddlySDK.Extensions.NETCore.Setup\SkeddlySDK.Extensions.NETCore.Setup.csproj", "{015A5BD7-1FE5-426A-8C81-FBA82D40D5FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetCoreWeb", "Samples\DotNetCoreWeb\DotNetCoreWeb.csproj", "{1CEFC9CD-A891-479B-8314-4A9A247B9AAF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4854B5B3-98B5-43A0-A291-FED93B9F230C}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +26,34 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EB43E4AF-45A2-42B0-B4B5-E94B25E0BCFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB43E4AF-45A2-42B0-B4B5-E94B25E0BCFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB43E4AF-45A2-42B0-B4B5-E94B25E0BCFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB43E4AF-45A2-42B0-B4B5-E94B25E0BCFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0EBE573-8385-4F9C-B6D5-2563CEFF219C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0EBE573-8385-4F9C-B6D5-2563CEFF219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0EBE573-8385-4F9C-B6D5-2563CEFF219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0EBE573-8385-4F9C-B6D5-2563CEFF219C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01899E17-B6C2-44F5-8F82-599D07FCD468}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01899E17-B6C2-44F5-8F82-599D07FCD468}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01899E17-B6C2-44F5-8F82-599D07FCD468}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01899E17-B6C2-44F5-8F82-599D07FCD468}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84AA84D7-D6BE-4F22-9AB4-E3216F289C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84AA84D7-D6BE-4F22-9AB4-E3216F289C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84AA84D7-D6BE-4F22-9AB4-E3216F289C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84AA84D7-D6BE-4F22-9AB4-E3216F289C98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{015A5BD7-1FE5-426A-8C81-FBA82D40D5FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{015A5BD7-1FE5-426A-8C81-FBA82D40D5FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{015A5BD7-1FE5-426A-8C81-FBA82D40D5FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{015A5BD7-1FE5-426A-8C81-FBA82D40D5FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CEFC9CD-A891-479B-8314-4A9A247B9AAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CEFC9CD-A891-479B-8314-4A9A247B9AAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CEFC9CD-A891-479B-8314-4A9A247B9AAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CEFC9CD-A891-479B-8314-4A9A247B9AAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{01899E17-B6C2-44F5-8F82-599D07FCD468} = {5CD35CBA-55A4-469F-95E1-F06D49FB8C83}
+		{84AA84D7-D6BE-4F22-9AB4-E3216F289C98} = {5CD35CBA-55A4-469F-95E1-F06D49FB8C83}
+		{1CEFC9CD-A891-479B-8314-4A9A247B9AAF} = {5CD35CBA-55A4-469F-95E1-F06D49FB8C83}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D3153B4F-3C3D-44EB-918C-F98639B09171}

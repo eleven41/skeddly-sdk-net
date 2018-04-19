@@ -18,9 +18,8 @@ namespace Skeddly.Model
 		public string LastModifiedBy { get; set; }
 		public string Status { get; set; }
 
-		public string RoleArn { get; set; }
-		public string ExternalId { get; set; }
-		public string AccessKeyId { get; set; }
+		public AmazonIamRoleParameters AmazonIamRole { get; set; }
+		public AmazonIamAccessKeyParameters AmazonIamAccessKey { get; set; }
 
 		public IEnumerable<string> ActionIds { get; set; }
 		public IEnumerable<string> ManagedInstanceIds { get; set; }

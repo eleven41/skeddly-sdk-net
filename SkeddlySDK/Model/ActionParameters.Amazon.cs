@@ -130,6 +130,14 @@ namespace Skeddly.Model
 		public decimal MaxSpotPrice { get; set; }
 	}
 
+	public class DatabaseEndpoint
+	{
+		public string Endpoint { get; set; }
+		public int Port { get; set; }
+		public string Username { get; set; }
+		public string Password { get; set; }
+	}
+
 	public class AmazonBackupMySQLServerParameters : AmazonActionParameters
 	{
 		public string EngineVersion { get; set; }
@@ -143,10 +151,9 @@ namespace Skeddly.Model
 
 		public SpotInstanceOptions SpotInstanceOptions { get; set; }
 
-		public string Endpoint { get; set; }
-		public int Port { get; set; }
-		public string Username { get; set; }
-		public string Password { get; set; }
+		public string EndpointMethod { get; set; }
+
+		public DatabaseEndpoint DatabaseEndpoint { get; set; }
 
 		public string Databases { get; set; }
 		public SpecificDatabases SpecificDatabases { get; set; }
@@ -339,7 +346,7 @@ namespace Skeddly.Model
 		public string OverwriteRule { get; set; }
 	}
 
-	public class CreateAmiImagesParameters : AmazonActionParameters
+	public class AmazonCreateAmiImagesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 
@@ -350,7 +357,7 @@ namespace Skeddly.Model
 		public string Description { get; set; }
 		public string ImageName { get; set; }
 
-		public bool IsNoReboot { get; set; }
+		public string ConsistencyMethod { get; set; }
 
 		public string SetImageNameTagMethod { get; set; }
 		public string CustomImageNameTag { get; set; }
@@ -360,7 +367,7 @@ namespace Skeddly.Model
 
 		public IEnumerable<AmiImageTag> Tags { get; set; }
 
-		public InstanceVolumeChanges InstanceVolumeChanges { get; set; }
+		public AmiImageVolumeChanges VolumeChanges { get; set; }
 
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
@@ -369,7 +376,7 @@ namespace Skeddly.Model
 
 	public class AmiImageTag
 	{
-		public string Name { get; set; }
+		public string Key { get; set; }
 		public string Value { get; set; }
 
 		public bool AddToImage { get; set; }
@@ -385,7 +392,7 @@ namespace Skeddly.Model
 		public string SnapshotName { get; set; }
 	}
 
-	public class CreateEbsSnapshotsParameters : AmazonActionParameters
+	public class AmazonCreateEbsSnapshotsParameters : AmazonActionParameters
 	{
 		public string VolumeIdentificationMethod { get; set; }
 		public IEnumerable<string> VolumeIds { get; set; }
@@ -447,7 +454,7 @@ namespace Skeddly.Model
 		public string SnapshotId { get; set; }
 	}
 
-	public class InstanceVolumeChanges
+	public class AmiImageVolumeChanges
 	{
 		public string VolumesToInclude { get; set; }
 		public string ChangeVolumeType { get; set; }
@@ -455,7 +462,7 @@ namespace Skeddly.Model
 		public bool? ChangeIsDeleteOnTerminate { get; set; }
 	}
 
-	public class CreateImageParameters : AmazonActionParameters
+	public class AmazonCreateAmiImageParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
@@ -463,7 +470,8 @@ namespace Skeddly.Model
 
 		public string Description { get; set; }
 		public string ImageName { get; set; }
-		public bool IsNoReboot { get; set; }
+
+		public string ConsistencyMethod { get; set; }
 
 		public string SetImageNameTagMethod { get; set; }
 		public string CustomImageNameTag { get; set; }
@@ -472,7 +480,7 @@ namespace Skeddly.Model
 
 		public IEnumerable<AmiImageTag> Tags { get; set; }
 
-		public InstanceVolumeChanges InstanceVolumeChanges { get; set; }
+		public AmiImageVolumeChanges VolumeChanges { get; set; }
 
 		public string TargetRegionName { get; set; }
 		public string TargetCredentialId { get; set; }
@@ -521,7 +529,7 @@ namespace Skeddly.Model
 		public IEnumerable<Tag> Tags { get; set; }
 	}
 
-	public class CreateEbsSnapshotParameters : AmazonActionParameters
+	public class AmazonCreateEbsSnapshotParameters : AmazonActionParameters
 	{
 		public string VolumeIdentificationMethod { get; set; }
 		public string VolumeId { get; set; }
@@ -701,13 +709,13 @@ namespace Skeddly.Model
 		public string SnapshotName { get; set; }
 	}
 
-	public class SnapshotDescriptionComparison
+	public class EbsSnapshotDescriptionComparison
 	{
 		public string CompareType { get; set; }
 		public string Description { get; set; }
 	}
 
-	public class VolumeIdComparison
+	public class EbsVolumeIdComparison
 	{
 		public string CompareType { get; set; }
 		public string VolumeId { get; set; }
@@ -727,13 +735,13 @@ namespace Skeddly.Model
 		public MinimumToKeepPeriodParameters Years { get; set; }
 	}
 
-	public class DeleteSnapshotsParameters : AmazonActionParameters
+	public class AmazonDeleteEbsSnapshotsParameters : AmazonActionParameters
 	{
 		public string SnapshotIdentificationMethod { get; set; }
 
-		public SnapshotDescriptionComparison SnapshotDescriptionComparison { get; set; }
-		public SnapshotNameComparison SnapshotNameComparison { get; set; }
-		public VolumeIdComparison VolumeIdComparison { get; set; }
+		public EbsSnapshotDescriptionComparison SnapshotDescriptionComparison { get; set; }
+		public NameTagComparison SnapshotNameTagComparison { get; set; }
+		public EbsVolumeIdComparison VolumeIdComparison { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
 
 		public string DeleteScheme { get; set; }
@@ -757,7 +765,7 @@ namespace Skeddly.Model
 		public string NameTag { get; set; }
 	}
 
-	public class ImageDescriptionComparison
+	public class AmiImageDescriptionComparison
 	{
 		public string CompareType { get; set; }
 		public string Description { get; set; }
@@ -767,7 +775,7 @@ namespace Skeddly.Model
 	{
 		public string ImageIdentificationMethod { get; set; }
 
-		public ImageDescriptionComparison ImageDescriptionComparison { get; set; }
+		public AmiImageDescriptionComparison ImageDescriptionComparison { get; set; }
 		public AmiImageNameComparison ImageNameComparison { get; set; }
 		public NameTagComparison NameTagComparison { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
@@ -954,10 +962,15 @@ namespace Skeddly.Model
 		public int? DeregisterTimeInSeconds { get; set; }
 	}
 
-	public class RequestSpotInstanceParameters : AmazonActionParameters
+	public class AmazonRequestEc2SpotInstancesParameters : AmazonActionParameters
 	{
 		public string ImageIdentificationMethod { get; set; }
-		public string AmiImageId { get; set; }
+
+		public string ImageId { get; set; }
+		public AmiImageDescriptionComparison ImageDescriptionComparison { get; set; }
+		public AmiImageNameComparison ImageNameComparison { get; set; }
+		public NameTagComparison NameTagComparison { get; set; }
+		public ResourceTagComparison ResourceTagComparison { get; set; }
 
 		public string InstanceType { get; set; }
 		public string AvailabilityZone { get; set; }
@@ -1063,7 +1076,7 @@ namespace Skeddly.Model
 		public int? TimePeriodDays { get; set; }
 	}
 
-	public class StartInstanceParameters : AmazonActionParameters
+	public class AmazonStartEc2InstanceParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public string InstanceId { get; set; }
@@ -1079,10 +1092,10 @@ namespace Skeddly.Model
 		public int? StopTimeInSeconds { get; set; }
 	}
 
-	public class StartMultipleInstancesParameters : AmazonActionParameters
+	public class AmazonStartEc2InstancesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
-		public IEnumerable<StartMultipleInstancesInstance> Instances { get; set; }
+		public IEnumerable<StartEc2InstancesInstance> Instances { get; set; }
 		public InstanceNameComparison InstanceNameComparison { get; set; }
 		public ResourceTagComparison ResourceTagComparison { get; set; }
 
@@ -1095,7 +1108,7 @@ namespace Skeddly.Model
 		public int? StopTimeInSeconds { get; set; }
 	}
 
-	public class StartMultipleInstancesInstance
+	public class StartEc2InstancesInstance
 	{
 		public string InstanceId { get; set; }
 		public string ElasticIp { get; set; }
@@ -1216,7 +1229,7 @@ namespace Skeddly.Model
 		public string CompareType { get; set; }
 	}
 
-	public class ChangeDynamoDbTablesParameters : AmazonActionParameters
+	public class AmazonChangeDynamoDbTablesParameters : AmazonActionParameters
 	{
 		public string TableIdentificationMethod { get; set; }
 		public TableNameComparison TableNameComparison { get; set; }
@@ -1282,7 +1295,7 @@ namespace Skeddly.Model
 		public IEnumerable<string> Values { get; set; }
 	}
 
-	public class DeleteEbsVolumesParameters : AmazonActionParameters
+	public class AmazonDeleteEbsVolumesParameters : AmazonActionParameters
 	{
 		public string VolumeIdentificationMethod { get; set; }
 		public IEnumerable<string> VolumeIds { get; set; }
@@ -1426,7 +1439,7 @@ namespace Skeddly.Model
 		public string DeleteOnTerminate { get; set; }
 	}
 
-	public class ChangeEbsVolumesParameters : AmazonActionParameters
+	public class AmazonChangeEbsVolumesParameters : AmazonActionParameters
 	{
 		public string VolumeIdentificationMethod { get; set; }
 
@@ -1579,7 +1592,7 @@ namespace Skeddly.Model
 		public bool IsTest { get; set; }
 	}
 
-	public class ChangeEc2InstancesParameters : AmazonActionParameters
+	public class AmazonChangeEc2InstancesParameters : AmazonActionParameters
 	{
 		public string InstanceIdentificationMethod { get; set; }
 		public IEnumerable<string> InstanceIds { get; set; }

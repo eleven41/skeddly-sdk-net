@@ -11,7 +11,7 @@ using Skeddly.Model;
 namespace Skeddly
 {
 	public partial class SkeddlyClient : ISkeddlyClient
-    {
+	{
 		#region Time Zones
 
 		public async Task<ListTimeZonesResponse> ListTimeZonesAsync(ListTimeZonesRequest request)

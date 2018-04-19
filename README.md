@@ -3,6 +3,8 @@
 The **Skeddly SDK for .NET** enables .NET developers to easily work with [Skeddly][skeddly] and automate their
 [Amazon Web Services][aws] resources.
 
+[![NuGet](http://img.shields.io/nuget/v/SkeddlySDK.svg?style=flat-square)](https://www.nuget.org/packages/SkeddlySDK/)
+
 [![Build status](https://ci.appveyor.com/api/projects/status/xjs9qu527qii036l?svg=true)](https://ci.appveyor.com/project/eleven41/skeddly-sdk-net)
 
 * [Documentation][skeddly-docs]

@@ -16,7 +16,7 @@ namespace Skeddly
 	/// Provides access to the Skeddly API.
 	/// </summary>
 	public partial class SkeddlyClient : ISkeddlyClient
-    {
+	{
 		/// <summary>
 		/// Initializes a new instance of the SkeddlyClient class.
 		/// Configuration will be retrieved from the
@@ -26,13 +26,6 @@ namespace Skeddly
 		{
 			SkeddlyOptions options = new SkeddlyOptions();
 
-			// Try reading from the configuration
-			options.AccessKeyId = Skeddly.Helpers.ConfigurationHelpers.AppSetting("SkeddlyAccessKeyId");
-			if (String.IsNullOrEmpty(options.AccessKeyId))
-				throw new Exception("SkeddlyAccessKeyId not set in configuration");
-
-			options.EndPoint = Skeddly.Helpers.ConfigurationHelpers.AppSetting("SkeddlyEndPoint");
-			
 			Init(options);
 		}
 
@@ -103,14 +96,26 @@ namespace Skeddly
 			else if (!String.IsNullOrEmpty(options.AccessKeyId))
 				this.Credentials = new AccessKeyCredentials(options.AccessKeyId);
 			else
-				throw new InvalidOperationException("AccessKeyId or Credentials must be configured.");
+			{
+				string accessKeyId = Skeddly.Helpers.ConfigurationHelpers.AppSetting("SkeddlyAccessKeyId");
+				if (!String.IsNullOrEmpty(accessKeyId))
+					this.Credentials = new AccessKeyCredentials(accessKeyId);
+				else
+					throw new Exception("SkeddlyAccessKeyId not set in configuration");
+			}
 
 			if (!String.IsNullOrEmpty(options.EndPoint))
 				this.EndPoint = options.EndPoint;
 			else
-				this.EndPoint = "https://api.skeddly.com";
+			{
+				string endPoint = Skeddly.Helpers.ConfigurationHelpers.AppSetting("SkeddlyEndPoint");
+				if (!String.IsNullOrEmpty(endPoint))
+					this.EndPoint = endPoint;
+				else
+					this.EndPoint = "https://api.skeddly.com";
+			}
 		}
-		
+
 		public void Dispose()
 		{
 			// Nothing to do for now
@@ -149,7 +154,7 @@ namespace Skeddly
 		}
 
 		private async Task<ResponseT> InvokeGetAsync<ResponseT>(string action, IEnumerable<JsonConverter> jsonConverters)
-		{	
+		{
 			using (var client = CreateHttpClient())
 			{
 				HttpResponseMessage httpResponse = await client.GetAsync(action);
@@ -163,14 +168,14 @@ namespace Skeddly
 				if (jsonConverters != null &&
 					jsonConverters.Any())
 				{
-					var formatters = new JsonMediaTypeFormatter[] 
+					var formatters = new JsonMediaTypeFormatter[]
 					{
-						new JsonMediaTypeFormatter 
+						new JsonMediaTypeFormatter
 						{
-							SerializerSettings = new JsonSerializerSettings 
-							{ 
+							SerializerSettings = new JsonSerializerSettings
+							{
 								Converters = jsonConverters.ToList()
-							} 
+							}
 						}
 					};
 
@@ -181,7 +186,7 @@ namespace Skeddly
 					return await httpResponse.Content.ReadAsAsync<ResponseT>();
 				}
 
-				
+
 			}
 		}
 
@@ -238,7 +243,7 @@ namespace Skeddly
 				//	};
 
 				//HttpResponseMessage httpResponse = await client.PostAsync(action, request, jsonFormatter);
-				
+
 				HttpResponseMessage httpResponse = await client.PostAsJsonAsync(action, request);
 
 				if (!httpResponse.IsSuccessStatusCode)
@@ -250,14 +255,14 @@ namespace Skeddly
 				if (jsonConverters != null &&
 					jsonConverters.Any())
 				{
-					var formatters = new JsonMediaTypeFormatter[] 
+					var formatters = new JsonMediaTypeFormatter[]
 					{
-						new JsonMediaTypeFormatter 
+						new JsonMediaTypeFormatter
 						{
-							SerializerSettings = new JsonSerializerSettings 
-							{ 
+							SerializerSettings = new JsonSerializerSettings
+							{
 								Converters = jsonConverters.ToList()
-							} 
+							}
 						}
 					};
 
@@ -290,14 +295,14 @@ namespace Skeddly
 				if (jsonConverters != null &&
 					jsonConverters.Any())
 				{
-					var formatters = new JsonMediaTypeFormatter[] 
+					var formatters = new JsonMediaTypeFormatter[]
 					{
-						new JsonMediaTypeFormatter 
+						new JsonMediaTypeFormatter
 						{
-							SerializerSettings = new JsonSerializerSettings 
-							{ 
+							SerializerSettings = new JsonSerializerSettings
+							{
 								Converters = jsonConverters.ToList()
-							} 
+							}
 						}
 					};
 

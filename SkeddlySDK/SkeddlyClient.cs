@@ -27,6 +27,8 @@ namespace Skeddly
 			SkeddlyOptions options = new SkeddlyOptions();
 
 			Init(options);
+
+			this.HttpClientProvider = new Providers.DefaultHttpClientProvider();
 		}
 
 		/// <summary>
@@ -47,6 +49,8 @@ namespace Skeddly
 			};
 
 			Init(options);
+
+			this.HttpClientProvider = new Providers.DefaultHttpClientProvider();
 		}
 
 		/// <summary>
@@ -65,6 +69,8 @@ namespace Skeddly
 			};
 
 			Init(options);
+
+			this.HttpClientProvider = new Providers.DefaultHttpClientProvider();
 		}
 
 		/// <summary>
@@ -74,6 +80,19 @@ namespace Skeddly
 		public SkeddlyClient(SkeddlyOptions options)
 		{
 			Init(options);
+
+			this.HttpClientProvider = new Providers.DefaultHttpClientProvider();
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the SkeddlyClient class.
+		/// Configuration will be retrieved from the SkeddlyOptions object.
+		/// </summary>
+		public SkeddlyClient(SkeddlyOptions options, Providers.IHttpClientProvider httpClientProvider)
+		{
+			Init(options);
+
+			this.HttpClientProvider = httpClientProvider;
 		}
 
 		/// <summary>
@@ -85,6 +104,25 @@ namespace Skeddly
 		/// Gets or sets the endpoint URL.
 		/// </summary>
 		public string EndPoint { get; set; }
+
+		private Providers.IHttpClientProvider _httpClientProvider;
+
+		/// <summary>
+		/// Gets or sets the HttpClient provider. Mainly used for unit testing
+		/// </summary>
+		public Providers.IHttpClientProvider HttpClientProvider
+		{
+			get
+			{
+				return _httpClientProvider;
+			}
+			set
+			{
+				if (value == null)
+					throw new ArgumentNullException("HttpClientProvider");
+				_httpClientProvider = value;
+			}
+		}
 
 		protected virtual void Init(SkeddlyOptions options)
 		{
@@ -123,7 +161,7 @@ namespace Skeddly
 
 		protected virtual HttpClient CreateHttpClient()
 		{
-			var client = new HttpClient();
+			var client = this.HttpClientProvider.CreateHttpClient();
 
 			client.BaseAddress = new Uri(this.EndPoint);
 			client.DefaultRequestHeaders.Accept.Clear();
@@ -161,6 +199,9 @@ namespace Skeddly
 
 				if (!httpResponse.IsSuccessStatusCode)
 				{
+					if (httpResponse.Content == null)
+						throw new Skeddly.Model.SkeddlyException(httpResponse.ReasonPhrase);
+
 					var response = await httpResponse.Content.ReadAsAsync<ErrorResponse>();
 					throw CreateLocalException(httpResponse.StatusCode, response);
 				}

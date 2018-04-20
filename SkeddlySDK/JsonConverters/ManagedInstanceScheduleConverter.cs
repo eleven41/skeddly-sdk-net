@@ -23,6 +23,7 @@ namespace Skeddly.JsonConverters
 			// Search the dictionary "case insensitive"
 			Dictionary<string, JToken> d = new Dictionary<string, JToken>(jObject.ToObject<IDictionary<string, JToken>>(), StringComparer.CurrentCultureIgnoreCase);
 			var scheduleTypeToken = d["scheduleType"];
+
 			if (scheduleTypeToken != null)
 			{
 				if (scheduleTypeToken.Type == JTokenType.String)

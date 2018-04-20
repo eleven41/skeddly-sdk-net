@@ -20,7 +20,10 @@ namespace Skeddly.JsonConverters
 
 			Skeddly.Model.ActionParameters p = null;
 
-			var actionTypeToken = jObject["actionType"];
+			// Search the dictionary "case insensitive"
+			Dictionary<string, JToken> d = new Dictionary<string, JToken>(jObject.ToObject<IDictionary<string, JToken>>(), StringComparer.CurrentCultureIgnoreCase);
+			var actionTypeToken = d["actionType"];
+
 			if (actionTypeToken != null)
 			{
 				if (actionTypeToken.Type == JTokenType.String)

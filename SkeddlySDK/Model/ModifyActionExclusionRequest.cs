@@ -14,6 +14,7 @@ namespace Skeddly.Model
 
 		public bool IsEnabled { get; set; }
 
+		public string StartDate { get; set; }
 		public string ExpiryDate { get; set; }
 		public string TimeZoneId { get; set; }
 

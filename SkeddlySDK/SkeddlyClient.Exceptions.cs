@@ -15,7 +15,9 @@ namespace Skeddly
 		{
 			if (errorResponse != null)
 			{
-				if (errorResponse.ErrorCode == "CredentialNotFound")
+				if (errorResponse.ErrorCode == "CredentialNotAuthorized")
+					throw new CredentialNotAuthorizedException(errorResponse.Message);
+				else if (errorResponse.ErrorCode == "CredentialNotFound")
 					throw new CredentialNotFoundException(errorResponse.Message);
 				else if (errorResponse.ErrorCode == "InvalidRoleOrAccessDenied")
 					return new InvalidRoleOrAccessDeniedException(errorResponse.Message);
@@ -31,6 +33,8 @@ namespace Skeddly
 					return new ManagedInstanceGroupNotFoundException(errorResponse.Message);
 				else if (errorResponse.ErrorCode == "TimeZoneNotFound")
 					return new Model.TimeZoneNotFoundException(errorResponse.Message);
+				else if (errorResponse.ErrorCode == "CredentialAuthorizationFailed")
+					return new Model.CredentialAuthorizationFailedException(errorResponse.Message);
 				return new SkeddlyWebException(statusCode, errorResponse.ErrorCode, errorResponse.Message);
 			}
 			else

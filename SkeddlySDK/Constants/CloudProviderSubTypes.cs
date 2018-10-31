@@ -12,5 +12,9 @@ namespace Skeddly.Constants
 		public const string AmazonStandard = "amazon-standard";
 		public const string AmazonGovcloudUs = "amazon-govcloud-us";
 		public const string AmazonChina = "amazon-china";
+
+		// Azure
+		public const string AzureGlobal = "azure-global";
+
 	}
 }

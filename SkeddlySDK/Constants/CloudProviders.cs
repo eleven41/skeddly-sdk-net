@@ -10,5 +10,8 @@ namespace Skeddly.Constants
 	{
 		// Amazon Web Services
 		public const string AmazonWebServices = "amazon";
+
+		// Microsoft Azure
+		public const string Azure = "azure";
 	}
 }

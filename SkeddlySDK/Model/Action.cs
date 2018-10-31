@@ -45,5 +45,7 @@ namespace Skeddly.Model
 		public string ManagedInstanceId { get; set; }
 
 		public bool IsCurrentVersion { get; set; }
+
+		public PostActionExecutionTriggers PostExecutionTriggers { get; set; }
 	}
 }

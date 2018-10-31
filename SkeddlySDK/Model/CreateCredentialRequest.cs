@@ -13,5 +13,6 @@ namespace Skeddly.Model
 
 		public AmazonIamAccessKeyParameters AmazonIamAccessKey { get; set; }
 		public AmazonIamRoleParameters AmazonIamRole { get; set; }
+		public AzureCredentialParameters AzureCredential { get; set; }
 	}
 }

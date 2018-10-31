@@ -144,6 +144,8 @@ namespace Skeddly
 		#region Repots
 
 		Task<GetEstimatedCostSavingsReportResponse> GetEstimatedCostSavingsReportAsync(GetEstimatedCostSavingsReportRequest request);
+		Task<GetBackupCoverageReportResponse> GetBackupCoverageReportAsync(GetBackupCoverageReportRequest request);
+		Task<GetStartStopCoverageReportResponse> GetStartStopCoverageReportAsync(GetStartStopCoverageReportRequest request);
 
 		#endregion
 	}

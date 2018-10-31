@@ -90,6 +90,10 @@ namespace Skeddly
 				new Skeddly.JsonConverters.ActionScheduleConverter()
 			};
 
+			if (request.IsIncludeDeleted.HasValue)
+			{
+				queryParameters.Add("isIncludeDeleted=" + request.IsIncludeDeleted.Value.ToString());
+			}
 			if (request.Include != null)
 			{
 				queryParameters.Add("include=" + String.Join(",", request.Include));

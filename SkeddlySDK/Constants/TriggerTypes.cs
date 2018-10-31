@@ -11,5 +11,6 @@ namespace Skeddly.Constants
 		public const string Schedule = "schedule";
 		public const string User = "user";
 		public const string Sns = "sns";
+		public const string PostActionExecutionTrigger = "post-action-execution-trigger";
 	}
 }

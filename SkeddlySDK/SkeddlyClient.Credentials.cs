@@ -19,9 +19,38 @@ namespace Skeddly
 		/// <returns>The list of credentials.</returns>
 		public async Task<ListCredentialsResponse> ListCredentialsAsync(ListCredentialsRequest request)
 		{
+			if (request == null)
+				throw new ArgumentNullException("request");
+
+			List<string> queryParameters = new List<string>();
+
+			if (request.Filter != null)
+			{
+				if (request.Filter.CredentialIds != null)
+				{
+					queryParameters.Add("filter.credentialIds=" + String.Join(",", request.Filter.CredentialIds));
+				}
+				if (request.Filter.CloudProviderIds != null)
+				{
+					queryParameters.Add("filter.cloudProviderIds=" + String.Join(",", request.Filter.CloudProviderIds));
+				}
+				if (request.Filter.CloudProviderSubTypeIds != null)
+				{
+					queryParameters.Add("filter.cloudProviderSubTypeIds=" + String.Join(",", request.Filter.CloudProviderSubTypeIds));
+				}
+				if (request.Filter.IsIncludeDeleted.HasValue)
+				{
+					queryParameters.Add("filter.isIncludeDeleted=" + request.Filter.IsIncludeDeleted.Value.ToString());
+				}
+			}
+
+			string queryString = null;
+			if (queryParameters.Any())
+				queryString = "?" + String.Join("&", queryParameters);
+
 			return new ListCredentialsResponse()
 			{
-				Credentials = await this.InvokeGetAsync<IEnumerable<Credential>>("api/Credentials")
+				Credentials = await this.InvokeGetAsync<IEnumerable<Credential>>("api/Credentials" + queryString)
 			};
 		}
 

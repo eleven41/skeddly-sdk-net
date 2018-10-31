@@ -8,6 +8,7 @@ namespace Skeddly.Model
 	public class GetActionRequest
 	{
 		public string ActionId { get; set; }
+		public bool? IsIncludeDeleted { get; set; }
 		public List<ActionIncludes> Include { get; set; }
 	}
 }

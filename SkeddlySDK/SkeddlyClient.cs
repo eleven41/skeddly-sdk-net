@@ -124,7 +124,7 @@ namespace Skeddly
 			}
 		}
 
-		protected virtual void Init(SkeddlyOptions options)
+		private void Init(SkeddlyOptions options)
 		{
 			if (options == null)
 				throw new ArgumentNullException("options");
@@ -154,10 +154,23 @@ namespace Skeddly
 			}
 		}
 
+		#region IDisposable
+
 		public void Dispose()
 		{
-			// Nothing to do for now
+			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
+
+		protected virtual void Dispose(bool isDisposing)
+		{
+			if (isDisposing)
+			{
+				// Nothing for now
+			}
+		}
+
+		#endregion
 
 		protected virtual HttpClient CreateHttpClient()
 		{

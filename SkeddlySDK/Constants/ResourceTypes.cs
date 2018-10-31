@@ -9,5 +9,6 @@ namespace Skeddly.Constants
 	public static class ResourceTypes
 	{
 		public const string AmazonEc2Instance = "amazon-ec2-instance";
+		public const string AmazonRdsInstance = "amazon-rds-instance";
 	}
 }

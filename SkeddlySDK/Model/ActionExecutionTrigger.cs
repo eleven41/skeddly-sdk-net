@@ -4,5 +4,6 @@
 	{
 		public string TriggerType { get; set; }
 		public string UserId { get; set; }
+		public string ActionExecutionId { get; set; }
 	}
 }

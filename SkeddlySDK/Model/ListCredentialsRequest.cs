@@ -8,5 +8,6 @@ namespace Skeddly.Model
 {
 	public class ListCredentialsRequest
 	{
+		public ListCredentialsFilter Filter { get; set; }
 	}
 }

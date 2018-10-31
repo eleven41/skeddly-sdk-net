@@ -8,6 +8,7 @@ namespace Skeddly.Constants
 {
 	public static class PaymentMethods
 	{
+		public const string Trial = "trial";
 		public const string None = "none";
 		public const string CreditBalance = "credit-balance";
 		public const string CreditCard = "credit-card";

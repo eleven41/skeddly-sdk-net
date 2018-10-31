@@ -18,6 +18,7 @@ namespace Skeddly.Model
 		public string LastModifiedDate { get; set; }
 		public string LastModifiedBy { get; set; }
 
+		public string StartDate { get; set; }
 		public string ExpiryDate { get; set; }
 		public string TimeZoneId { get; set; }
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Skeddly.Model
 {
+	[Serializable]
 	public class SkeddlyException : Exception
 	{
 		public SkeddlyException()
@@ -20,6 +21,11 @@ namespace Skeddly.Model
 
 		public SkeddlyException(string message, Exception innerException)
 			: base(message, innerException)
+		{
+		}
+
+		protected SkeddlyException(System.Runtime.Serialization.SerializationInfo serializationInfo, System.Runtime.Serialization.StreamingContext streamingContext)
+			: base(serializationInfo, streamingContext)
 		{
 		}
 	}

@@ -38,7 +38,81 @@ namespace Skeddly
 				Report = await this.InvokeGetAsync<Skeddly.Model.EstimatedCostSavingsReport>("/api/Reports/EstimatedCostSavings" + queryString)
 			};
 		}
-		
+
+		public async Task<GetBackupCoverageReportResponse> GetBackupCoverageReportAsync(GetBackupCoverageReportRequest request)
+		{
+			if (request == null)
+				throw new ArgumentNullException("request");
+
+			List<JsonConverter> jsonConverters = new List<JsonConverter>()
+			{
+				new Skeddly.JsonConverters.ActionScheduleConverter()
+			};
+
+			List<string> queryParameters = new List<string>();
+
+			if (!String.IsNullOrEmpty(request.CredentialId))
+			{
+				queryParameters.Add("credentialId=" + request.CredentialId);
+			}
+
+			if (!String.IsNullOrEmpty(request.RegionName))
+			{
+				queryParameters.Add("regionName=" + request.RegionName);
+			}
+
+			if (!String.IsNullOrEmpty(request.ResourceType))
+			{
+				queryParameters.Add("resourceType=" + request.ResourceType);
+			}
+
+			string queryString = null;
+			if (queryParameters.Any())
+				queryString = "?" + String.Join("&", queryParameters);
+
+			return new GetBackupCoverageReportResponse()
+			{
+				Report = await this.InvokeGetAsync<Skeddly.Model.BackupCoverageReport>("/api/Reports/BackupCoverage" + queryString, jsonConverters)
+			};
+		}
+
+		public async Task<GetStartStopCoverageReportResponse> GetStartStopCoverageReportAsync(GetStartStopCoverageReportRequest request)
+		{
+			if (request == null)
+				throw new ArgumentNullException("request");
+
+			List<JsonConverter> jsonConverters = new List<JsonConverter>()
+			{
+				new Skeddly.JsonConverters.ActionScheduleConverter()
+			};
+
+			List<string> queryParameters = new List<string>();
+
+			if (!String.IsNullOrEmpty(request.CredentialId))
+			{
+				queryParameters.Add("credentialId=" + request.CredentialId);
+			}
+
+			if (!String.IsNullOrEmpty(request.RegionName))
+			{
+				queryParameters.Add("regionName=" + request.RegionName);
+			}
+
+			if (!String.IsNullOrEmpty(request.ResourceType))
+			{
+				queryParameters.Add("resourceType=" + request.ResourceType);
+			}
+
+			string queryString = null;
+			if (queryParameters.Any())
+				queryString = "?" + String.Join("&", queryParameters);
+
+			return new GetStartStopCoverageReportResponse()
+			{
+				Report = await this.InvokeGetAsync<Skeddly.Model.StartStopCoverageReport>("/api/Reports/StartStopCoverage" + queryString, jsonConverters)
+			};
+		}
+
 		#endregion
 	}
 }
